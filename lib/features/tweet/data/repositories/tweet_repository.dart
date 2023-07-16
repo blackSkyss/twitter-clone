@@ -17,6 +17,12 @@ TweetRepository tweetRepository(TweetRepositoryRef ref) {
   );
 }
 
+@riverpod
+Future<List<Tweet>> getTweets(GetTweetsRef ref) {
+  final tweetRepository = ref.read(tweetRepositoryProvider);
+  return tweetRepository.getTweets();
+}
+
 class TweetRepository {
   final FirebaseFirestore _firestore;
   // ignore: unused_field
@@ -33,5 +39,17 @@ class TweetRepository {
   // Share text tweet
   Future<void> shareTweet(Tweet tweet) async {
     await _tweets.doc(tweet.id).set(tweet.toMap());
+  }
+
+  // Get list tweet
+  Future<List<Tweet>> getTweets() async {
+    List<Tweet> tweets = [];
+    await _tweets.get().then((snapshot) {
+      for (var doc in snapshot.docs) {
+        tweets.add(Tweet.fromMap(doc.data() as Map<String, dynamic>));
+      }
+    });
+
+    return tweets;
   }
 }
