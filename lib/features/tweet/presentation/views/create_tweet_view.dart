@@ -22,7 +22,7 @@ class CreateTweetView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(getUserDataProvider);
+    final user = ref.watch(getUserDataProvider(''));
     final state = ref.watch(tweetControllerProvider);
     final tweetTextController = useTextEditingController();
     final images = useState<List<File>>([]);
@@ -41,9 +41,12 @@ class CreateTweetView extends HookConsumerWidget {
 
     void onShareTweet() async {
       final res = await ref.read(tweetControllerProvider.notifier).shareTweet(
-          images: images.value,
-          text: tweetTextController.text.trim(),
-          context: context);
+            images: images.value,
+            text: tweetTextController.text.trim(),
+            context: context,
+            repliedTo: '',
+          );
+
       if (res) {
         showSnackBar(context: context, content: 'Tweet successfully');
         context.router.pop();

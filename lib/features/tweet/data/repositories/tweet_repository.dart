@@ -24,9 +24,24 @@ Future<List<Tweet>> getTweets(GetTweetsRef ref) {
 }
 
 @riverpod
+Future<Tweet> getTweetById(GetTweetByIdRef ref, String tweetId) {
+  final tweetRepository = ref.read(tweetRepositoryProvider);
+  return tweetRepository.getTweetById(tweetId);
+}
+
+@riverpod
 Stream<List<Tweet>> getLastestTweet(GetLastestTweetRef ref) {
   final tweetRepository = ref.read(tweetRepositoryProvider);
   return tweetRepository.getLastestTweet();
+}
+
+@riverpod
+Stream<List<Tweet>> getRepliesToTweet(
+  GetRepliesToTweetRef ref,
+  String tweetId,
+) {
+  final tweetRepository = ref.read(tweetRepositoryProvider);
+  return tweetRepository.getRepliesToTweet(tweetId);
 }
 
 class TweetRepository {
@@ -59,6 +74,26 @@ class TweetRepository {
     return tweets;
   }
 
+  // Get tweet by id
+  Future<Tweet> getTweetById(String tweetId) async {
+    final snapshot = await _tweets.doc(tweetId).get();
+    return Tweet.fromMap(snapshot.data() as Map<String, dynamic>);
+  }
+
+  // Like tweet
+  Future<void> likeTweet(Tweet tweet) async {
+    await _tweets.doc(tweet.id).update({
+      'likes': tweet.likes,
+    });
+  }
+
+  // Update reshare count
+  Future<void> updateReshareCount(Tweet tweet) async {
+    await _tweets.doc(tweet.id).update({
+      'reshareCount': tweet.reshareCount,
+    });
+  }
+
   // Get lastest tweet
   Stream<List<Tweet>> getLastestTweet() {
     return _tweets
@@ -73,17 +108,18 @@ class TweetRepository {
     });
   }
 
-  // Like tweet
-  Future<void> likeTweet(Tweet tweet) async {
-    await _tweets.doc(tweet.id).update({
-      'likes': tweet.likes,
-    });
-  }
-
-  // Update reshare count
-  Future<void> updateReshareCount(Tweet tweet) async {
-    await _tweets.doc(tweet.id).update({
-      'reshareCount': tweet.reshareCount,
+  // Get replies to tweet
+  Stream<List<Tweet>> getRepliesToTweet(String tweetId) {
+    return _tweets
+        .where('repliedTo', isEqualTo: tweetId)
+        .orderBy('tweetedAt', descending: true)
+        .snapshots(includeMetadataChanges: true)
+        .map((event) {
+      List<Tweet> tweets = [];
+      for (var document in event.docs) {
+        tweets.add(Tweet.fromMap(document.data() as Map<String, dynamic>));
+      }
+      return tweets;
     });
   }
 }

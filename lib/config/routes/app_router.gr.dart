@@ -57,6 +57,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const CreateTweetView(),
       );
     },
+    TwitterReplyViewRoute.name: (routeData) {
+      final args = routeData.argsAs<TwitterReplyViewRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: TwitterReplyView(
+          key: args.key,
+          tweet: args.tweet,
+        ),
+      );
+    },
   };
 }
 
@@ -156,4 +166,42 @@ class CreateTweetViewRoute extends PageRouteInfo<void> {
   static const String name = 'CreateTweetViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TwitterReplyView]
+class TwitterReplyViewRoute extends PageRouteInfo<TwitterReplyViewRouteArgs> {
+  TwitterReplyViewRoute({
+    Key? key,
+    required Tweet tweet,
+    List<PageRouteInfo>? children,
+  }) : super(
+          TwitterReplyViewRoute.name,
+          args: TwitterReplyViewRouteArgs(
+            key: key,
+            tweet: tweet,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'TwitterReplyViewRoute';
+
+  static const PageInfo<TwitterReplyViewRouteArgs> page =
+      PageInfo<TwitterReplyViewRouteArgs>(name);
+}
+
+class TwitterReplyViewRouteArgs {
+  const TwitterReplyViewRouteArgs({
+    this.key,
+    required this.tweet,
+  });
+
+  final Key? key;
+
+  final Tweet tweet;
+
+  @override
+  String toString() {
+    return 'TwitterReplyViewRouteArgs{key: $key, tweet: $tweet}';
+  }
 }

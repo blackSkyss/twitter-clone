@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:twitter_clone/config/routes/guard/auth_guard.dart';
 import '../../features/auth/presentation/views/login_view.dart';
@@ -8,6 +9,8 @@ import '../../features/home/presentation/views/home_view.dart';
 import '../../features/home/presentation/views/notification_view.dart';
 import '../../features/home/presentation/views/search_view.dart';
 import '../../features/tweet/presentation/views/create_tweet_view.dart';
+import '../../features/tweet/presentation/views/twitter_reply_view.dart';
+import '../../models/tweet_model.dart';
 
 part 'app_router.gr.dart';
 
@@ -33,6 +36,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: LoginViewRoute.page),
         AutoRoute(page: SignUpViewRoute.page),
         AutoRoute(page: CreateTweetViewRoute.page),
+        AutoRoute(page: TwitterReplyViewRoute.page),
       ];
 }
 

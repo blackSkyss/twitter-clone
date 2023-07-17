@@ -6,7 +6,7 @@ part of 'tweet_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tweetControllerHash() => r'437ac2058d9362f1cffad1f24f290129a6c653e3';
+String _$tweetControllerHash() => r'3209626d325096ebed94b60312a37b2c86b655af';
 
 /// See also [TweetController].
 @ProviderFor(TweetController)

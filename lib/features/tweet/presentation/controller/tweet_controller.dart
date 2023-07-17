@@ -23,6 +23,7 @@ class TweetController extends _$TweetController {
     required List<File> images,
     required String text,
     required BuildContext context,
+    required String repliedTo,
   }) async {
     if (text.isEmpty) {
       showSnackBar(context: context, content: 'Please enter text');
@@ -30,9 +31,9 @@ class TweetController extends _$TweetController {
     }
 
     if (images.isNotEmpty) {
-      await _shareImageTweet(images: images, text: text, context: context);
+      await _shareImageTweet(images: images, text: text, repliedTo: repliedTo);
     } else {
-      await _shareTextTweet(text: text, context: context);
+      await _shareTextTweet(text: text, repliedTo: repliedTo);
     }
 
     return true;
@@ -42,15 +43,16 @@ class TweetController extends _$TweetController {
   Future<void> _shareImageTweet({
     required List<File> images,
     required String text,
-    required BuildContext context,
+    required String repliedTo,
   }) async {
     state = const AsyncValue.loading();
+    final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
     final commonFirebase = ref.read(commonFirebaseStorageRepositoryProvider);
 
     final hashtags = _getHashtagsFromText(text);
     String link = _getLinkFromText(text);
-    final user = ref.watch(getUserDataProvider).value;
+    final user = await authRepository.getUserData('');
     final id = const Uuid().v1();
 
     final links = await commonFirebase.storeFileToFirebase('tweet/$id', images);
@@ -60,7 +62,7 @@ class TweetController extends _$TweetController {
       hashtags: hashtags,
       link: link,
       imageLinks: links,
-      uid: user!.uid,
+      uid: user.uid,
       tweetType: TweetType.image,
       tweetedAt: DateTime.now(),
       likes: [],
@@ -68,6 +70,7 @@ class TweetController extends _$TweetController {
       id: id,
       reshareCount: 0,
       retweetedBy: '',
+      repliedTo: repliedTo,
     );
 
     state = await AsyncValue.guard(
@@ -79,22 +82,24 @@ class TweetController extends _$TweetController {
 
   // Share text tweet
   Future<void> _shareTextTweet({
+    required String repliedTo,
     required String text,
-    required BuildContext context,
   }) async {
     state = const AsyncValue.loading();
+    final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
+
+    final user = await authRepository.getUserData('');
+    final id = const Uuid().v1();
     final hashtags = _getHashtagsFromText(text);
     String link = _getLinkFromText(text);
-    final user = ref.watch(getUserDataProvider).value;
-    final id = const Uuid().v1();
 
     Tweet tweet = Tweet(
       text: text,
       hashtags: hashtags,
       link: link,
       imageLinks: [],
-      uid: user!.uid,
+      uid: user.uid,
       tweetType: TweetType.text,
       tweetedAt: DateTime.now(),
       likes: [],
@@ -102,6 +107,7 @@ class TweetController extends _$TweetController {
       id: id,
       reshareCount: 0,
       retweetedBy: '',
+      repliedTo: repliedTo,
     );
 
     state = await AsyncValue.guard(
@@ -137,12 +143,13 @@ class TweetController extends _$TweetController {
 
   // Like tweet
   void likeTweet(Tweet tweet) async {
-    final user = ref.watch(getUserDataProvider).value;
+    final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
 
+    final user = await authRepository.getUserData('');
     List<String> likes = tweet.likes;
 
-    if (tweet.likes.contains(user!.uid)) {
+    if (tweet.likes.contains(user.uid)) {
       likes.remove(user.uid);
     } else {
       likes.add(user.uid);
@@ -158,12 +165,14 @@ class TweetController extends _$TweetController {
 
   // Reshare tweet
   Future<void> reshareTweet(Tweet tweet) async {
-    final user = ref.watch(getUserDataProvider).value;
+    final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
 
+    final user = await authRepository.getUserData('');
     tweet = tweet.copyWith(
       reshareCount: tweet.reshareCount + 1,
     );
+
     state = await AsyncValue.guard(
       () async {
         await tweetRepository.updateReshareCount(tweet);
@@ -174,7 +183,7 @@ class TweetController extends _$TweetController {
           commentIds: [],
           reshareCount: 0,
           tweetedAt: DateTime.now(),
-          retweetedBy: user!.name,
+          retweetedBy: user.name,
         );
 
         await tweetRepository.shareTweet(tweet);
