@@ -21,7 +21,7 @@ class TweetCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(getUserDataProvider(tweet.uid)).when(
+    return ref.watch(getUserDataProvider).when(
           data: (user) {
             return Column(
               children: [
@@ -52,7 +52,7 @@ class TweetCard extends ConsumerWidget {
                                 ),
                               ),
                               Text(
-                                '@${user.name}${timeago.format(tweet.tweetedAt, locale: 'en_short')}',
+                                '@${user.name}  ${timeago.format(tweet.tweetedAt, locale: 'en_short')}',
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Pallete.greyColor,
@@ -113,15 +113,23 @@ class TweetCard extends ConsumerWidget {
                                 ),
                                 IconButton(
                                   onPressed: () {},
-                                  icon: const Icon(Icons.share_outlined),
+                                  icon: const Icon(
+                                    Icons.share_outlined,
+                                    size: 25,
+                                    color: Pallete.greyColor,
+                                  ),
                                 ),
                               ],
                             ),
                           ),
+                          const SizedBox(height: 1),
                         ],
                       ),
                     ),
                   ],
+                ),
+                const Divider(
+                  color: Pallete.greyColor,
                 ),
               ],
             );

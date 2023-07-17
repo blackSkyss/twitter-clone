@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:twitter_clone/features/auth/presentation/controller/auth_controller.dart';
+import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/util/commons/functions/common_firebase.dart';
@@ -50,7 +50,7 @@ class TweetController extends _$TweetController {
 
     final hashtags = _getHashtagsFromText(text);
     String link = _getLinkFromText(text);
-    final user = ref.watch(userProvider);
+    final user = ref.watch(getUserDataProvider).value;
     final id = const Uuid().v1();
 
     final links = await commonFirebase.storeFileToFirebase('tweet/$id', images);
@@ -85,7 +85,7 @@ class TweetController extends _$TweetController {
     final tweetRepository = ref.read(tweetRepositoryProvider);
     final hashtags = _getHashtagsFromText(text);
     String link = _getLinkFromText(text);
-    final user = ref.watch(userProvider);
+    final user = ref.watch(getUserDataProvider).value;
     final id = const Uuid().v1();
 
     Tweet tweet = Tweet(

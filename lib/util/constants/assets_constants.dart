@@ -1,4 +1,5 @@
 class AssetsConstants {
+  static const String placeHolder = 'assets/images/placeholder_news.jpg';
   static const String _svgsPath = 'assets/svgs';
   static const String twitterLogo = '$_svgsPath/twitter_logo.svg';
   static const String homeFilledIcon = '$_svgsPath/home_filled.svg';

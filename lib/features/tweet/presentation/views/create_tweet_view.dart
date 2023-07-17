@@ -7,6 +7,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/auth/presentation/controller/auth_controller.dart';
 import 'package:twitter_clone/features/tweet/presentation/controller/tweet_controller.dart';
 import 'package:twitter_clone/util/commons/functions/utils.dart';
@@ -21,7 +22,7 @@ class CreateTweetView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = ref.watch(userProvider);
+    final user = ref.watch(getUserDataProvider);
     final state = ref.watch(tweetControllerProvider);
     final tweetTextController = useTextEditingController();
     final images = useState<List<File>>([]);
@@ -64,7 +65,7 @@ class CreateTweetView extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: RoundedSmallButton(
-              onTap: state.isLoading || user == null ? () {} : onShareTweet,
+              onTap: state.isLoading || user.isLoading ? () {} : onShareTweet,
               label: 'Tweet',
               backgroundColor: Pallete.blueColor,
               textColor: Pallete.whiteColor,
@@ -72,7 +73,7 @@ class CreateTweetView extends HookConsumerWidget {
           ),
         ],
       ),
-      body: state.isLoading || user == null
+      body: state.isLoading || user.isLoading
           ? const Loader()
           : SafeArea(
               child: Padding(
@@ -83,7 +84,8 @@ class CreateTweetView extends HookConsumerWidget {
                       Row(
                         children: [
                           CircleAvatar(
-                            backgroundImage: NetworkImage(user.profilePic),
+                            backgroundImage:
+                                NetworkImage(user.value!.profilePic),
                             radius: 30,
                           ),
                           const SizedBox(width: 15),

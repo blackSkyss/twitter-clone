@@ -24,9 +24,9 @@ Stream<User?> authState(AuthStateRef ref) {
 }
 
 @riverpod
-Future<UserModel> getUserData(GetUserDataRef ref, String uid) {
+Future<UserModel> getUserData(GetUserDataRef ref) async {
   final authRepository = ref.watch(authRepositoryProvider);
-  return authRepository.getUserData(uid);
+  return authRepository.getUserData();
 }
 
 class AuthRepository {
@@ -48,11 +48,11 @@ class AuthRepository {
     required String email,
     required String password,
   }) async {
-    final credential = await _auth.signInWithEmailAndPassword(
+    await _auth.signInWithEmailAndPassword(
       email: email,
       password: password,
     );
-    final user = await getUserData(credential.user!.uid);
+    final user = await getUserData();
     return user;
   }
 
@@ -88,8 +88,9 @@ class AuthRepository {
   }
 
   // Get user data
-  Future<UserModel> getUserData(String uid) async {
-    final snapshot = await _users.doc(uid).get();
+  Future<UserModel> getUserData() async {
+    final currentUser = _auth.currentUser;
+    final snapshot = await _users.doc(currentUser!.uid).get();
     return UserModel.fromMap(snapshot.data() as Map<String, dynamic>);
   }
 }

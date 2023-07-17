@@ -11,15 +11,35 @@ class TweetList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ref.watch(getTweetsProvider).when(
           data: (tweets) {
-            return ListView.builder(
-              itemCount: tweets.length,
-              itemBuilder: (context, index) {
-                final tweet = tweets[index];
-                return TweetCard(
-                  tweet: tweet,
+            return ref.watch(getLastestTweetProvider).when(
+                  data: (data) {
+                    if (!tweets.contains(data)) {
+                      tweets.insert(0, data);
+                    }
+
+                    return ListView.builder(
+                      itemCount: tweets.length,
+                      itemBuilder: (context, index) {
+                        final tweet = tweets[index];
+                        return TweetCard(
+                          tweet: tweet,
+                        );
+                      },
+                    );
+                  },
+                  error: (err, trace) => ErrorText(error: err.toString()),
+                  loading: () {
+                    return ListView.builder(
+                      itemCount: tweets.length,
+                      itemBuilder: (context, index) {
+                        final tweet = tweets[index];
+                        return TweetCard(
+                          tweet: tweet,
+                        );
+                      },
+                    );
+                  },
                 );
-              },
-            );
           },
           error: (err, trace) => ErrorText(error: err.toString()),
           loading: () => const Loader(),

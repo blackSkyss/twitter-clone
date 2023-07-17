@@ -35,107 +35,18 @@ final authStateProvider = StreamProvider<User?>.internal(
 );
 
 typedef AuthStateRef = StreamProviderRef<User?>;
-String _$getUserDataHash() => r'e0aa3842803c5f9e9e0318eb203026f7fd57c472';
-
-/// Copied from Dart SDK
-class _SystemHash {
-  _SystemHash._();
-
-  static int combine(int hash, int value) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + value);
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x0007ffff & hash) << 10));
-    return hash ^ (hash >> 6);
-  }
-
-  static int finish(int hash) {
-    // ignore: parameter_assignments
-    hash = 0x1fffffff & (hash + ((0x03ffffff & hash) << 3));
-    // ignore: parameter_assignments
-    hash = hash ^ (hash >> 11);
-    return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
-  }
-}
-
-typedef GetUserDataRef = AutoDisposeFutureProviderRef<UserModel>;
+String _$getUserDataHash() => r'100fabbfb769be1cd9a0e8b66b63ec35dc911e06';
 
 /// See also [getUserData].
 @ProviderFor(getUserData)
-const getUserDataProvider = GetUserDataFamily();
+final getUserDataProvider = AutoDisposeFutureProvider<UserModel>.internal(
+  getUserData,
+  name: r'getUserDataProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$getUserDataHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-/// See also [getUserData].
-class GetUserDataFamily extends Family<AsyncValue<UserModel>> {
-  /// See also [getUserData].
-  const GetUserDataFamily();
-
-  /// See also [getUserData].
-  GetUserDataProvider call(
-    String uid,
-  ) {
-    return GetUserDataProvider(
-      uid,
-    );
-  }
-
-  @override
-  GetUserDataProvider getProviderOverride(
-    covariant GetUserDataProvider provider,
-  ) {
-    return call(
-      provider.uid,
-    );
-  }
-
-  static const Iterable<ProviderOrFamily>? _dependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
-
-  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
-
-  @override
-  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
-      _allTransitiveDependencies;
-
-  @override
-  String? get name => r'getUserDataProvider';
-}
-
-/// See also [getUserData].
-class GetUserDataProvider extends AutoDisposeFutureProvider<UserModel> {
-  /// See also [getUserData].
-  GetUserDataProvider(
-    this.uid,
-  ) : super.internal(
-          (ref) => getUserData(
-            ref,
-            uid,
-          ),
-          from: getUserDataProvider,
-          name: r'getUserDataProvider',
-          debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product')
-                  ? null
-                  : _$getUserDataHash,
-          dependencies: GetUserDataFamily._dependencies,
-          allTransitiveDependencies:
-              GetUserDataFamily._allTransitiveDependencies,
-        );
-
-  final String uid;
-
-  @override
-  bool operator ==(Object other) {
-    return other is GetUserDataProvider && other.uid == uid;
-  }
-
-  @override
-  int get hashCode {
-    var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, uid.hashCode);
-
-    return _SystemHash.finish(hash);
-  }
-}
+typedef GetUserDataRef = AutoDisposeFutureProviderRef<UserModel>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

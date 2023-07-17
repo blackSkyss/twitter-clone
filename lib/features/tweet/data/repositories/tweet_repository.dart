@@ -23,6 +23,12 @@ Future<List<Tweet>> getTweets(GetTweetsRef ref) {
   return tweetRepository.getTweets();
 }
 
+@riverpod
+Stream<Tweet> getLastestTweet(GetLastestTweetRef ref) {
+  final tweetRepository = ref.read(tweetRepositoryProvider);
+  return tweetRepository.getLastestTweet();
+}
+
 class TweetRepository {
   final FirebaseFirestore _firestore;
   // ignore: unused_field
@@ -44,12 +50,20 @@ class TweetRepository {
   // Get list tweet
   Future<List<Tweet>> getTweets() async {
     List<Tweet> tweets = [];
-    await _tweets.get().then((snapshot) {
+    await _tweets.orderBy('tweetedAt', descending: true).get().then((snapshot) {
       for (var doc in snapshot.docs) {
         tweets.add(Tweet.fromMap(doc.data() as Map<String, dynamic>));
       }
     });
 
     return tweets;
+  }
+
+  // Get lastest tweet
+  Stream<Tweet> getLastestTweet() {
+    return _tweets.orderBy('tweetedAt', descending: true).snapshots().map(
+          (tweet) =>
+              Tweet.fromMap(tweet.docs.first.data() as Map<String, dynamic>),
+        );
   }
 }
