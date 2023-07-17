@@ -11,7 +11,9 @@ import '../../features/home/presentation/views/notification_view.dart';
 import '../../features/home/presentation/views/search_view.dart';
 import '../../features/tweet/presentation/views/create_tweet_view.dart';
 import '../../features/tweet/presentation/views/twitter_reply_view.dart';
+import '../../features/user_profile/presentation/views/user_profile_view.dart';
 import '../../models/tweet_model.dart';
+import '../../models/user_model.dart';
 
 part 'app_router.gr.dart';
 
@@ -39,6 +41,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: CreateTweetViewRoute.page),
         AutoRoute(page: TwitterReplyViewRoute.page),
         AutoRoute(page: ExploreViewRoute.page),
+        AutoRoute(page: UserProfileViewRoute.page),
       ];
 }
 

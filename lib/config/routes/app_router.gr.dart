@@ -73,6 +73,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ExploreView(),
       );
     },
+    UserProfileViewRoute.name: (routeData) {
+      final args = routeData.argsAs<UserProfileViewRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: UserProfileView(
+          key: args.key,
+          user: args.user,
+        ),
+      );
+    },
   };
 }
 
@@ -224,4 +234,42 @@ class ExploreViewRoute extends PageRouteInfo<void> {
   static const String name = 'ExploreViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [UserProfileView]
+class UserProfileViewRoute extends PageRouteInfo<UserProfileViewRouteArgs> {
+  UserProfileViewRoute({
+    Key? key,
+    required UserModel user,
+    List<PageRouteInfo>? children,
+  }) : super(
+          UserProfileViewRoute.name,
+          args: UserProfileViewRouteArgs(
+            key: key,
+            user: user,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'UserProfileViewRoute';
+
+  static const PageInfo<UserProfileViewRouteArgs> page =
+      PageInfo<UserProfileViewRouteArgs>(name);
+}
+
+class UserProfileViewRouteArgs {
+  const UserProfileViewRouteArgs({
+    this.key,
+    required this.user,
+  });
+
+  final Key? key;
+
+  final UserModel user;
+
+  @override
+  String toString() {
+    return 'UserProfileViewRouteArgs{key: $key, user: $user}';
+  }
 }

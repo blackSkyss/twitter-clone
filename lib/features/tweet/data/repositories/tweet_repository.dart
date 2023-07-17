@@ -30,6 +30,12 @@ Future<Tweet> getTweetById(GetTweetByIdRef ref, String tweetId) {
 }
 
 @riverpod
+Future<List<Tweet>> getUserTweet(GetUserTweetRef ref, String userId) {
+  final tweetRepository = ref.read(tweetRepositoryProvider);
+  return tweetRepository.getUserTweet(userId);
+}
+
+@riverpod
 Stream<List<Tweet>> getLastestTweet(GetLastestTweetRef ref) {
   final tweetRepository = ref.read(tweetRepositoryProvider);
   return tweetRepository.getLastestTweet();
@@ -78,6 +84,17 @@ class TweetRepository {
   Future<Tweet> getTweetById(String tweetId) async {
     final snapshot = await _tweets.doc(tweetId).get();
     return Tweet.fromMap(snapshot.data() as Map<String, dynamic>);
+  }
+
+  // Get user tweet
+  Future<List<Tweet>> getUserTweet(String userId) async {
+    List<Tweet> tweets = [];
+    final snapshot = await _tweets.where('uid', isEqualTo: userId).get();
+    for (var document in snapshot.docs) {
+      tweets.add(Tweet.fromMap(document.data() as Map<String, dynamic>));
+    }
+
+    return tweets;
   }
 
   // Like tweet

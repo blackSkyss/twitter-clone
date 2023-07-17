@@ -139,6 +139,88 @@ class GetTweetByIdProvider extends AutoDisposeFutureProvider<Tweet> {
   }
 }
 
+String _$getUserTweetHash() => r'52d9b835fa2c2f0f3d5ac2fe7f848f8bd31eb0f3';
+typedef GetUserTweetRef = AutoDisposeFutureProviderRef<List<Tweet>>;
+
+/// See also [getUserTweet].
+@ProviderFor(getUserTweet)
+const getUserTweetProvider = GetUserTweetFamily();
+
+/// See also [getUserTweet].
+class GetUserTweetFamily extends Family<AsyncValue<List<Tweet>>> {
+  /// See also [getUserTweet].
+  const GetUserTweetFamily();
+
+  /// See also [getUserTweet].
+  GetUserTweetProvider call(
+    String userId,
+  ) {
+    return GetUserTweetProvider(
+      userId,
+    );
+  }
+
+  @override
+  GetUserTweetProvider getProviderOverride(
+    covariant GetUserTweetProvider provider,
+  ) {
+    return call(
+      provider.userId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getUserTweetProvider';
+}
+
+/// See also [getUserTweet].
+class GetUserTweetProvider extends AutoDisposeFutureProvider<List<Tweet>> {
+  /// See also [getUserTweet].
+  GetUserTweetProvider(
+    this.userId,
+  ) : super.internal(
+          (ref) => getUserTweet(
+            ref,
+            userId,
+          ),
+          from: getUserTweetProvider,
+          name: r'getUserTweetProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getUserTweetHash,
+          dependencies: GetUserTweetFamily._dependencies,
+          allTransitiveDependencies:
+              GetUserTweetFamily._allTransitiveDependencies,
+        );
+
+  final String userId;
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetUserTweetProvider && other.userId == userId;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, userId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$getLastestTweetHash() => r'323ff5a9391c607e86cabd31204b1d1e84fa5def';
 
 /// See also [getLastestTweet].
