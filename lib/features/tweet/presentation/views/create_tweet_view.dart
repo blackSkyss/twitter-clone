@@ -8,7 +8,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
-import 'package:twitter_clone/features/auth/presentation/controller/auth_controller.dart';
 import 'package:twitter_clone/features/tweet/presentation/controller/tweet_controller.dart';
 import 'package:twitter_clone/util/commons/functions/utils.dart';
 import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
@@ -28,7 +27,7 @@ class CreateTweetView extends HookConsumerWidget {
     final images = useState<List<File>>([]);
 
     ref.listen<AsyncValue>(
-      authControllerProvider,
+      tweetControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
 

@@ -24,9 +24,18 @@ Stream<User?> authState(AuthStateRef ref) {
 }
 
 @riverpod
-Future<UserModel> getUserData(GetUserDataRef ref, String userId) async {
+Future<UserModel> getUserData(GetUserDataRef ref, String userId) {
   final authRepository = ref.watch(authRepositoryProvider);
   return authRepository.getUserData(userId);
+}
+
+@riverpod
+Future<List<UserModel>> searchUserByName(
+  SearchUserByNameRef ref,
+  String name,
+) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return authRepository.searchUserByName(name);
 }
 
 class AuthRepository {
@@ -97,5 +106,16 @@ class AuthRepository {
 
     final snapshot = await _users.doc(uid).get();
     return UserModel.fromMap(snapshot.data() as Map<String, dynamic>);
+  }
+
+  // Search user by name
+  Future<List<UserModel>> searchUserByName(String name) async {
+    List<UserModel> users = [];
+    final snapshot = await _users.where('name', isEqualTo: name).get();
+    for (var document in snapshot.docs) {
+      users.add(UserModel.fromMap(document.data() as Map<String, dynamic>));
+    }
+
+    return users;
   }
 }

@@ -21,14 +21,14 @@ class HomeView extends ConsumerWidget {
     return AutoTabsScaffold(
       routes: const [
         FeedViewRoute(),
-        SearchViewRoute(),
+        ExploreViewRoute(),
         NotificationViewRoute(),
       ],
       floatingActionButtonBuilder: (_, __) => FloatingActionButton(
         onPressed: () => navigateToCreateTweet(context),
         child: const Icon(Icons.add),
       ),
-      appBarBuilder: (_, __) => UIConstants.appBar(),
+      appBarBuilder: (_, tabsRouter) => UIConstants.appBar(),
       bottomNavigationBuilder: (_, tabsRouter) {
         return CupertinoTabBar(
           currentIndex: tabsRouter.activeIndex,

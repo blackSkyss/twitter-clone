@@ -5,6 +5,7 @@ import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.
 import 'package:twitter_clone/features/tweet/presentation/controller/tweet_controller.dart';
 import 'package:twitter_clone/features/tweet/presentation/widgets/tweet_card.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
+import 'package:twitter_clone/util/extensions/extensions_export.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
 
 @RoutePage()
@@ -17,6 +18,11 @@ class TwitterReplyView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<AsyncValue>(
+      tweetControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tweet'),

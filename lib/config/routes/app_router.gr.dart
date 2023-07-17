@@ -67,6 +67,12 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    ExploreViewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ExploreView(),
+      );
+    },
   };
 }
 
@@ -204,4 +210,18 @@ class TwitterReplyViewRouteArgs {
   String toString() {
     return 'TwitterReplyViewRouteArgs{key: $key, tweet: $tweet}';
   }
+}
+
+/// generated route for
+/// [ExploreView]
+class ExploreViewRoute extends PageRouteInfo<void> {
+  const ExploreViewRoute({List<PageRouteInfo>? children})
+      : super(
+          ExploreViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ExploreViewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -35,7 +35,7 @@ final authStateProvider = StreamProvider<User?>.internal(
 );
 
 typedef AuthStateRef = StreamProviderRef<User?>;
-String _$getUserDataHash() => r'9b2dca78eef17f89db18655ef0d692f79b211459';
+String _$getUserDataHash() => r'4b5b24e967f5368ee58a77f56f5c8b354100bc89';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -134,6 +134,89 @@ class GetUserDataProvider extends AutoDisposeFutureProvider<UserModel> {
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, userId.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$searchUserByNameHash() => r'0cffe228d112a2a12bf496927515fdb6fd25f0ae';
+typedef SearchUserByNameRef = AutoDisposeFutureProviderRef<List<UserModel>>;
+
+/// See also [searchUserByName].
+@ProviderFor(searchUserByName)
+const searchUserByNameProvider = SearchUserByNameFamily();
+
+/// See also [searchUserByName].
+class SearchUserByNameFamily extends Family<AsyncValue<List<UserModel>>> {
+  /// See also [searchUserByName].
+  const SearchUserByNameFamily();
+
+  /// See also [searchUserByName].
+  SearchUserByNameProvider call(
+    String name,
+  ) {
+    return SearchUserByNameProvider(
+      name,
+    );
+  }
+
+  @override
+  SearchUserByNameProvider getProviderOverride(
+    covariant SearchUserByNameProvider provider,
+  ) {
+    return call(
+      provider.name,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'searchUserByNameProvider';
+}
+
+/// See also [searchUserByName].
+class SearchUserByNameProvider
+    extends AutoDisposeFutureProvider<List<UserModel>> {
+  /// See also [searchUserByName].
+  SearchUserByNameProvider(
+    this.name,
+  ) : super.internal(
+          (ref) => searchUserByName(
+            ref,
+            name,
+          ),
+          from: searchUserByNameProvider,
+          name: r'searchUserByNameProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$searchUserByNameHash,
+          dependencies: SearchUserByNameFamily._dependencies,
+          allTransitiveDependencies:
+              SearchUserByNameFamily._allTransitiveDependencies,
+        );
+
+  final String name;
+
+  @override
+  bool operator ==(Object other) {
+    return other is SearchUserByNameProvider && other.name == name;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, name.hashCode);
 
     return _SystemHash.finish(hash);
   }
