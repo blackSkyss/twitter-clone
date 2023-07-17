@@ -1,8 +1,11 @@
 import 'package:any_link_preview/any_link_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:like_button/like_button.dart';
 import 'package:twitter_clone/config/themes/theme_export.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
+import 'package:twitter_clone/features/tweet/presentation/controller/tweet_controller.dart';
 import 'package:twitter_clone/features/tweet/presentation/widgets/carousel_image.dart';
 import 'package:twitter_clone/features/tweet/presentation/widgets/hashtag_text.dart';
 import 'package:twitter_clone/features/tweet/presentation/widgets/tweet_icon_button.dart';
@@ -106,10 +109,47 @@ class TweetCard extends ConsumerWidget {
                                   text: tweet.commentIds.length.toString(),
                                   onTap: () {},
                                 ),
-                                TweetIconButton(
-                                  pathName: AssetsConstants.likeOutlinedIcon,
-                                  text: tweet.commentIds.length.toString(),
-                                  onTap: () {},
+                                LikeButton(
+                                  onTap: (isLiked) async {
+                                    ref
+                                        .read(tweetControllerProvider.notifier)
+                                        .likeTweet(tweet);
+                                    return !isLiked;
+                                  },
+                                  size: 25,
+                                  isLiked: tweet.likes.contains(user.uid),
+                                  likeBuilder: (isLiked) {
+                                    return isLiked
+                                        ? SvgPicture.asset(
+                                            AssetsConstants.likeFilledIcon,
+                                            colorFilter: const ColorFilter.mode(
+                                              Pallete.redColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                          )
+                                        : SvgPicture.asset(
+                                            AssetsConstants.likeOutlinedIcon,
+                                            colorFilter: const ColorFilter.mode(
+                                              Pallete.greyColor,
+                                              BlendMode.srcIn,
+                                            ),
+                                          );
+                                  },
+                                  likeCount: tweet.likes.length,
+                                  countBuilder: (likeCount, isLiked, text) {
+                                    return Padding(
+                                      padding: const EdgeInsets.only(left: 2.0),
+                                      child: Text(
+                                        text,
+                                        style: TextStyle(
+                                          color: isLiked
+                                              ? Pallete.redColor
+                                              : Pallete.whiteColor,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                                 IconButton(
                                   onPressed: () {},

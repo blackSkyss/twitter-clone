@@ -132,4 +132,25 @@ class TweetController extends _$TweetController {
     }
     return hashtags;
   }
+
+  // Like tweet
+  void likeTweet(Tweet tweet) async {
+    final user = ref.watch(getUserDataProvider).value;
+    final tweetRepository = ref.read(tweetRepositoryProvider);
+
+    List<String> likes = tweet.likes;
+
+    if (tweet.likes.contains(user!.uid)) {
+      likes.remove(user.uid);
+    } else {
+      likes.add(user.uid);
+    }
+
+    tweet = tweet.copyWith(likes: likes);
+    state = await AsyncValue.guard(
+      () async {
+        await tweetRepository.likeTweet(tweet);
+      },
+    );
+  }
 }

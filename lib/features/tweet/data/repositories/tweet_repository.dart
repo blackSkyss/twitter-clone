@@ -66,4 +66,11 @@ class TweetRepository {
               Tweet.fromMap(tweet.docs.first.data() as Map<String, dynamic>),
         );
   }
+
+  // Like tweet
+  Future<void> likeTweet(Tweet tweet) async {
+    await _tweets.doc(tweet.id).update({
+      'likes': tweet.likes,
+    });
+  }
 }
