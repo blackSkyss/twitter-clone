@@ -67,6 +67,7 @@ class TweetController extends _$TweetController {
       commentIds: [],
       id: id,
       reshareCount: 0,
+      retweetedBy: '',
     );
 
     state = await AsyncValue.guard(
@@ -100,6 +101,7 @@ class TweetController extends _$TweetController {
       commentIds: [],
       id: id,
       reshareCount: 0,
+      retweetedBy: '',
     );
 
     state = await AsyncValue.guard(
@@ -150,6 +152,32 @@ class TweetController extends _$TweetController {
     state = await AsyncValue.guard(
       () async {
         await tweetRepository.likeTweet(tweet);
+      },
+    );
+  }
+
+  // Reshare tweet
+  Future<void> reshareTweet(Tweet tweet) async {
+    final user = ref.watch(getUserDataProvider).value;
+    final tweetRepository = ref.read(tweetRepositoryProvider);
+
+    tweet = tweet.copyWith(
+      reshareCount: tweet.reshareCount + 1,
+    );
+    state = await AsyncValue.guard(
+      () async {
+        await tweetRepository.updateReshareCount(tweet);
+
+        tweet = tweet.copyWith(
+          id: const Uuid().v1(),
+          likes: [],
+          commentIds: [],
+          reshareCount: 0,
+          tweetedAt: DateTime.now(),
+          retweetedBy: user!.name,
+        );
+
+        await tweetRepository.shareTweet(tweet);
       },
     );
   }

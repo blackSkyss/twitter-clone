@@ -35,7 +35,7 @@ final authStateProvider = StreamProvider<User?>.internal(
 );
 
 typedef AuthStateRef = StreamProviderRef<User?>;
-String _$getUserDataHash() => r'100fabbfb769be1cd9a0e8b66b63ec35dc911e06';
+String _$getUserDataHash() => r'd6b91b6dc401071bdf28d3ce4a0ec2586d971352';
 
 /// See also [getUserData].
 @ProviderFor(getUserData)

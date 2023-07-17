@@ -35,11 +35,11 @@ final getTweetsProvider = AutoDisposeFutureProvider<List<Tweet>>.internal(
 );
 
 typedef GetTweetsRef = AutoDisposeFutureProviderRef<List<Tweet>>;
-String _$getLastestTweetHash() => r'043abf33dba7a1f2e94f4733aab5f7681dc7b21e';
+String _$getLastestTweetHash() => r'323ff5a9391c607e86cabd31204b1d1e84fa5def';
 
 /// See also [getLastestTweet].
 @ProviderFor(getLastestTweet)
-final getLastestTweetProvider = AutoDisposeStreamProvider<Tweet>.internal(
+final getLastestTweetProvider = AutoDisposeStreamProvider<List<Tweet>>.internal(
   getLastestTweet,
   name: r'getLastestTweetProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -49,5 +49,5 @@ final getLastestTweetProvider = AutoDisposeStreamProvider<Tweet>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef GetLastestTweetRef = AutoDisposeStreamProviderRef<Tweet>;
+typedef GetLastestTweetRef = AutoDisposeStreamProviderRef<List<Tweet>>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

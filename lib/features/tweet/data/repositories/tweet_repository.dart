@@ -24,7 +24,7 @@ Future<List<Tweet>> getTweets(GetTweetsRef ref) {
 }
 
 @riverpod
-Stream<Tweet> getLastestTweet(GetLastestTweetRef ref) {
+Stream<List<Tweet>> getLastestTweet(GetLastestTweetRef ref) {
   final tweetRepository = ref.read(tweetRepositoryProvider);
   return tweetRepository.getLastestTweet();
 }
@@ -60,17 +60,30 @@ class TweetRepository {
   }
 
   // Get lastest tweet
-  Stream<Tweet> getLastestTweet() {
-    return _tweets.orderBy('tweetedAt', descending: true).snapshots().map(
-          (tweet) =>
-              Tweet.fromMap(tweet.docs.first.data() as Map<String, dynamic>),
-        );
+  Stream<List<Tweet>> getLastestTweet() {
+    return _tweets
+        .orderBy('tweetedAt', descending: true)
+        .snapshots(includeMetadataChanges: true)
+        .map((event) {
+      List<Tweet> tweets = [];
+      for (var document in event.docs) {
+        tweets.add(Tweet.fromMap(document.data() as Map<String, dynamic>));
+      }
+      return tweets;
+    });
   }
 
   // Like tweet
   Future<void> likeTweet(Tweet tweet) async {
     await _tweets.doc(tweet.id).update({
       'likes': tweet.likes,
+    });
+  }
+
+  // Update reshare count
+  Future<void> updateReshareCount(Tweet tweet) async {
+    await _tweets.doc(tweet.id).update({
+      'reshareCount': tweet.reshareCount,
     });
   }
 }

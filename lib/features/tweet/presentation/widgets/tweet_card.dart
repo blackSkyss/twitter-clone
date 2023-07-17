@@ -24,6 +24,12 @@ class TweetCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    void reshareTweet() async {
+      await ref.read(tweetControllerProvider.notifier).reshareTweet(tweet);
+      // ignore: use_build_context_synchronously
+      showSnackBar(context: context, content: 'Retweeted!');
+    }
+
     return ref.watch(getUserDataProvider).when(
           data: (user) {
             return Column(
@@ -42,6 +48,28 @@ class TweetCard extends ConsumerWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          if (tweet.retweetedBy.isNotEmpty)
+                            Row(
+                              children: [
+                                SvgPicture.asset(
+                                  AssetsConstants.retweetIcon,
+                                  colorFilter: const ColorFilter.mode(
+                                    Pallete.greyColor,
+                                    BlendMode.srcIn,
+                                  ),
+                                  height: 20,
+                                ),
+                                const SizedBox(width: 2),
+                                Text(
+                                  '${tweet.retweetedBy} retweeted',
+                                  style: const TextStyle(
+                                    color: Pallete.greyColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                           Row(
                             children: [
                               Container(
@@ -107,7 +135,7 @@ class TweetCard extends ConsumerWidget {
                                 TweetIconButton(
                                   pathName: AssetsConstants.retweetIcon,
                                   text: tweet.commentIds.length.toString(),
-                                  onTap: () {},
+                                  onTap: reshareTweet,
                                 ),
                                 LikeButton(
                                   onTap: (isLiked) async {
