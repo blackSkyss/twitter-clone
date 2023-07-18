@@ -9,6 +9,7 @@ import '../../features/home/presentation/views/feed_view.dart';
 import '../../features/home/presentation/views/home_view.dart';
 import '../../features/notifications/presentation/views/notification_view.dart';
 import '../../features/tweet/presentation/views/create_tweet_view.dart';
+import '../../features/tweet/presentation/views/hashtag_view.dart';
 import '../../features/tweet/presentation/views/twitter_reply_view.dart';
 import '../../features/user_profile/presentation/views/edit_profile_view.dart';
 import '../../features/user_profile/presentation/views/user_profile_view.dart';
@@ -56,6 +57,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: EditProfileViewRoute.page,
+          guards: [AuthGuard(ref: _ref)],
+        ),
+        AutoRoute(
+          page: HashtagViewRoute.page,
           guards: [AuthGuard(ref: _ref)],
         ),
       ];

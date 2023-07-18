@@ -36,6 +36,15 @@ Future<List<Tweet>> getUserTweet(GetUserTweetRef ref, String userId) {
 }
 
 @riverpod
+Future<List<Tweet>> getTweetsByHashtag(
+  GetTweetsByHashtagRef ref,
+  String hashTag,
+) {
+  final tweetRepository = ref.read(tweetRepositoryProvider);
+  return tweetRepository.getTweetsByHashtag(hashTag);
+}
+
+@riverpod
 Stream<List<Tweet>> getLastestTweet(GetLastestTweetRef ref) {
   final tweetRepository = ref.read(tweetRepositoryProvider);
   return tweetRepository.getLastestTweet();
@@ -112,6 +121,20 @@ class TweetRepository {
     await _tweets.doc(tweet.id).update({
       'reshareCount': tweet.reshareCount,
     });
+  }
+
+  // Get tweet by hashtag
+  Future<List<Tweet>> getTweetsByHashtag(String hashTag) async {
+    List<Tweet> tweets = [];
+    final snapshot = await _tweets
+        .orderBy('tweetedAt', descending: true)
+        .where('hashtags', arrayContains: hashTag)
+        .get();
+    for (var document in snapshot.docs) {
+      tweets.add(Tweet.fromMap(document.data() as Map<String, dynamic>));
+    }
+
+    return tweets;
   }
 
   // Get lastest tweet

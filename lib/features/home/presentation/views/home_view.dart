@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/config/routes/app_router.dart';
+import 'package:twitter_clone/features/home/presentation/widgets/side_draw.dart';
 import '../../../../config/themes/theme_export.dart';
 import '../../../../util/constants/constants_export.dart';
 
@@ -24,6 +25,7 @@ class HomeView extends ConsumerWidget {
         ExploreViewRoute(),
         NotificationViewRoute(),
       ],
+      drawer: const SideDrawer(),
       floatingActionButtonBuilder: (_, __) => FloatingActionButton(
         onPressed: () => navigateToCreateTweet(context),
         child: const Icon(Icons.add),

@@ -112,6 +112,7 @@ class AuthRepository {
       'bio': user.bio,
       'bannerPic': user.bannerPic,
       'profilePic': user.profilePic,
+      'isTwitterBlue': user.isTwitterBlue,
     });
   }
 

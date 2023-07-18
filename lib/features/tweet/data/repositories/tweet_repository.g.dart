@@ -221,6 +221,90 @@ class GetUserTweetProvider extends AutoDisposeFutureProvider<List<Tweet>> {
   }
 }
 
+String _$getTweetsByHashtagHash() =>
+    r'ef8c652b858736b77730ea14a74459d8971467f6';
+typedef GetTweetsByHashtagRef = AutoDisposeFutureProviderRef<List<Tweet>>;
+
+/// See also [getTweetsByHashtag].
+@ProviderFor(getTweetsByHashtag)
+const getTweetsByHashtagProvider = GetTweetsByHashtagFamily();
+
+/// See also [getTweetsByHashtag].
+class GetTweetsByHashtagFamily extends Family<AsyncValue<List<Tweet>>> {
+  /// See also [getTweetsByHashtag].
+  const GetTweetsByHashtagFamily();
+
+  /// See also [getTweetsByHashtag].
+  GetTweetsByHashtagProvider call(
+    String hashTag,
+  ) {
+    return GetTweetsByHashtagProvider(
+      hashTag,
+    );
+  }
+
+  @override
+  GetTweetsByHashtagProvider getProviderOverride(
+    covariant GetTweetsByHashtagProvider provider,
+  ) {
+    return call(
+      provider.hashTag,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getTweetsByHashtagProvider';
+}
+
+/// See also [getTweetsByHashtag].
+class GetTweetsByHashtagProvider
+    extends AutoDisposeFutureProvider<List<Tweet>> {
+  /// See also [getTweetsByHashtag].
+  GetTweetsByHashtagProvider(
+    this.hashTag,
+  ) : super.internal(
+          (ref) => getTweetsByHashtag(
+            ref,
+            hashTag,
+          ),
+          from: getTweetsByHashtagProvider,
+          name: r'getTweetsByHashtagProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getTweetsByHashtagHash,
+          dependencies: GetTweetsByHashtagFamily._dependencies,
+          allTransitiveDependencies:
+              GetTweetsByHashtagFamily._allTransitiveDependencies,
+        );
+
+  final String hashTag;
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetTweetsByHashtagProvider && other.hashTag == hashTag;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, hashTag.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
 String _$getLastestTweetHash() => r'323ff5a9391c607e86cabd31204b1d1e84fa5def';
 
 /// See also [getLastestTweet].

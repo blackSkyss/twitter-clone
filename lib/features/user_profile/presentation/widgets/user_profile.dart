@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:twitter_clone/config/routes/app_router.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
@@ -9,6 +10,7 @@ import 'package:twitter_clone/features/user_profile/presentation/widgets/follow_
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
 import '../../../../config/themes/theme_export.dart';
+import '../../../../util/constants/constants_export.dart';
 import '../../../tweet/presentation/widgets/tweet_card.dart';
 
 class UserProfile extends ConsumerWidget {
@@ -97,12 +99,23 @@ class UserProfile extends ConsumerWidget {
                   sliver: SliverList(
                     delegate: SliverChildListDelegate(
                       [
-                        Text(
-                          user.name,
-                          style: const TextStyle(
-                            fontSize: 25,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              user.name,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            if (user.isTwitterBlue)
+                              Padding(
+                                padding: const EdgeInsets.only(left: 5.0),
+                                child: SvgPicture.asset(
+                                  AssetsConstants.verifiedIcon,
+                                ),
+                              ),
+                          ],
                         ),
                         Text(
                           '@${user.name}',

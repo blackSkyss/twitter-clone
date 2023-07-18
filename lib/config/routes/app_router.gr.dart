@@ -83,6 +83,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NotificationView(),
       );
     },
+    HashtagViewRoute.name: (routeData) {
+      final args = routeData.argsAs<HashtagViewRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: HashtagView(
+          key: args.key,
+          hashtag: args.hashtag,
+        ),
+      );
+    },
   };
 }
 
@@ -272,4 +282,42 @@ class NotificationViewRoute extends PageRouteInfo<void> {
   static const String name = 'NotificationViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HashtagView]
+class HashtagViewRoute extends PageRouteInfo<HashtagViewRouteArgs> {
+  HashtagViewRoute({
+    Key? key,
+    required String hashtag,
+    List<PageRouteInfo>? children,
+  }) : super(
+          HashtagViewRoute.name,
+          args: HashtagViewRouteArgs(
+            key: key,
+            hashtag: hashtag,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'HashtagViewRoute';
+
+  static const PageInfo<HashtagViewRouteArgs> page =
+      PageInfo<HashtagViewRouteArgs>(name);
+}
+
+class HashtagViewRouteArgs {
+  const HashtagViewRouteArgs({
+    this.key,
+    required this.hashtag,
+  });
+
+  final Key? key;
+
+  final String hashtag;
+
+  @override
+  String toString() {
+    return 'HashtagViewRouteArgs{key: $key, hashtag: $hashtag}';
+  }
 }
