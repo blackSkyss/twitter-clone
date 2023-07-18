@@ -64,6 +64,7 @@ class TwitterReplyView extends ConsumerWidget {
             text: val,
             context: context,
             repliedTo: tweet.id,
+            repliedToUserId: tweet.uid,
           );
         },
         decoration: const InputDecoration(

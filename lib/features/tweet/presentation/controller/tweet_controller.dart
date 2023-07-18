@@ -26,6 +26,7 @@ class TweetController extends _$TweetController {
     required String text,
     required BuildContext context,
     required String repliedTo,
+    required String repliedToUserId,
   }) async {
     if (text.isEmpty) {
       showSnackBar(context: context, content: 'Please enter text');
@@ -33,9 +34,18 @@ class TweetController extends _$TweetController {
     }
 
     if (images.isNotEmpty) {
-      await _shareImageTweet(images: images, text: text, repliedTo: repliedTo);
+      await _shareImageTweet(
+        images: images,
+        text: text,
+        repliedTo: repliedTo,
+        repliedToUserId: repliedToUserId,
+      );
     } else {
-      await _shareTextTweet(text: text, repliedTo: repliedTo);
+      await _shareTextTweet(
+        text: text,
+        repliedTo: repliedTo,
+        repliedToUserId: repliedToUserId,
+      );
     }
 
     return true;
@@ -46,11 +56,14 @@ class TweetController extends _$TweetController {
     required List<File> images,
     required String text,
     required String repliedTo,
+    required String repliedToUserId,
   }) async {
     state = const AsyncValue.loading();
     final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
     final commonFirebase = ref.read(commonFirebaseStorageRepositoryProvider);
+    final notificationController =
+        ref.read(notificationControllerProvider.notifier);
 
     final hashtags = _getHashtagsFromText(text);
     String link = _getLinkFromText(text);
@@ -78,6 +91,15 @@ class TweetController extends _$TweetController {
     state = await AsyncValue.guard(
       () async {
         await tweetRepository.shareTweet(tweet);
+
+        if (repliedToUserId.isNotEmpty) {
+          notificationController.createNotification(
+            text: '${user.name} replied to your tweet!',
+            postId: tweet.id,
+            notificationType: NotificationType.reply,
+            uid: repliedToUserId,
+          );
+        }
       },
     );
   }
@@ -86,10 +108,13 @@ class TweetController extends _$TweetController {
   Future<void> _shareTextTweet({
     required String repliedTo,
     required String text,
+    required String repliedToUserId,
   }) async {
     state = const AsyncValue.loading();
     final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
+    final notificationController =
+        ref.read(notificationControllerProvider.notifier);
 
     final user = await authRepository.getUserData('');
     final id = const Uuid().v1();
@@ -115,6 +140,15 @@ class TweetController extends _$TweetController {
     state = await AsyncValue.guard(
       () async {
         await tweetRepository.shareTweet(tweet);
+
+        if (repliedToUserId.isNotEmpty) {
+          notificationController.createNotification(
+            text: '${user.name} replied to your tweet!',
+            postId: tweet.id,
+            notificationType: NotificationType.reply,
+            uid: repliedToUserId,
+          );
+        }
       },
     );
   }
@@ -177,6 +211,8 @@ class TweetController extends _$TweetController {
   Future<void> reshareTweet(Tweet tweet) async {
     final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
+    final notificationController =
+        ref.read(notificationControllerProvider.notifier);
 
     final user = await authRepository.getUserData('');
     tweet = tweet.copyWith(
@@ -197,6 +233,13 @@ class TweetController extends _$TweetController {
         );
 
         await tweetRepository.shareTweet(tweet);
+
+        notificationController.createNotification(
+          text: '${user.name} reshared your tweet!',
+          postId: tweet.id,
+          notificationType: NotificationType.retweet,
+          uid: tweet.uid,
+        );
       },
     );
   }

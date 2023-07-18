@@ -44,6 +44,7 @@ class CreateTweetView extends HookConsumerWidget {
             text: tweetTextController.text.trim(),
             context: context,
             repliedTo: '',
+            repliedToUserId: '',
           );
 
       if (res) {

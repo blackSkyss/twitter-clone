@@ -2,7 +2,9 @@ import 'dart:io';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../models/user_model.dart';
 import '../../../../util/commons/functions/common_firebase.dart';
+import '../../../../util/enums/notification_type_enum.dart';
 import '../../../auth/data/repositories/auth_repository.dart';
+import '../../../notifications/presentation/controller/notification_controller.dart';
 
 part 'user_profile_controller.g.dart';
 
@@ -59,6 +61,8 @@ class UserProfileController extends _$UserProfileController {
   }) async {
     state = const AsyncValue.loading();
     final authRepository = ref.read(authRepositoryProvider);
+    final notificationController =
+        ref.read(notificationControllerProvider.notifier);
 
     if (currentUser.following.contains(user.uid)) {
       user.followers.remove(currentUser.uid);
@@ -75,6 +79,14 @@ class UserProfileController extends _$UserProfileController {
       () async {
         await authRepository.followUser(user);
         await authRepository.addToFollowing(currentUser);
+        if (currentUser.following.contains(user.uid)) {
+          notificationController.createNotification(
+            text: '${currentUser.name} followed you',
+            postId: '',
+            notificationType: NotificationType.follow,
+            uid: user.uid,
+          );
+        }
       },
     );
   }
