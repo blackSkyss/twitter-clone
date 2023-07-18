@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:twitter_clone/config/routes/app_router.dart';
 import 'package:twitter_clone/config/themes/theme_export.dart';
-
 import 'package:twitter_clone/models/user_model.dart';
 
 class SearchTile extends StatelessWidget {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/user_profile/presentation/widgets/user_profile.dart';
-
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
 

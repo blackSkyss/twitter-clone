@@ -4,7 +4,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/notifications/data/repositories/notification_repository.dart';
 import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
-
 import '../widgets/notification_tile.dart';
 
 @RoutePage()

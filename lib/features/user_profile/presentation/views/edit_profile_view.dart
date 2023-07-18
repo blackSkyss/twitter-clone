@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -61,12 +60,14 @@ class EditProfileView extends HookConsumerWidget {
                     profileFile: profileFile.value,
                   );
 
-              showSnackBar(
-                context: context,
-                content: 'Update information successfully',
-              );
+              if (context.mounted) {
+                showSnackBar(
+                  context: context,
+                  content: 'Update information successfully',
+                );
 
-              context.router.pop();
+                context.router.pop();
+              }
             }
 
             return Scaffold(

@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,9 +30,11 @@ class SignUpView extends HookConsumerWidget {
           authType: AuthType.signup,
         );
     if (res) {
-      showSnackBar(
-          context: context, content: 'Create account successfully'.hardcoded);
-      context.router.replaceAll([const LoginViewRoute()]);
+      if (context.mounted) {
+        showSnackBar(
+            context: context, content: 'Create account successfully'.hardcoded);
+        context.router.replaceAll([const LoginViewRoute()]);
+      }
     }
   }
 

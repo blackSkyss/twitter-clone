@@ -1,4 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -48,8 +47,10 @@ class CreateTweetView extends HookConsumerWidget {
           );
 
       if (res) {
-        showSnackBar(context: context, content: 'Tweet successfully');
-        context.router.pop();
+        if (context.mounted) {
+          showSnackBar(context: context, content: 'Tweet successfully');
+          context.router.pop();
+        }
       }
     }
 
