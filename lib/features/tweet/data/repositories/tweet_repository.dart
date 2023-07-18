@@ -89,7 +89,10 @@ class TweetRepository {
   // Get user tweet
   Future<List<Tweet>> getUserTweet(String userId) async {
     List<Tweet> tweets = [];
-    final snapshot = await _tweets.where('uid', isEqualTo: userId).get();
+    final snapshot = await _tweets
+        .orderBy('tweetedAt', descending: true)
+        .where('uid', isEqualTo: userId)
+        .get();
     for (var document in snapshot.docs) {
       tweets.add(Tweet.fromMap(document.data() as Map<String, dynamic>));
     }

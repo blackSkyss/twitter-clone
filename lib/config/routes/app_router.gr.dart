@@ -27,6 +27,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const SignUpView(),
       );
     },
+    ExploreViewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ExploreView(),
+      );
+    },
     FeedViewRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -67,10 +73,10 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    ExploreViewRoute.name: (routeData) {
+    EditProfileViewRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const ExploreView(),
+        child: const EditProfileView(),
       );
     },
     UserProfileViewRoute.name: (routeData) {
@@ -110,6 +116,20 @@ class SignUpViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'SignUpViewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ExploreView]
+class ExploreViewRoute extends PageRouteInfo<void> {
+  const ExploreViewRoute({List<PageRouteInfo>? children})
+      : super(
+          ExploreViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ExploreViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -223,15 +243,15 @@ class TwitterReplyViewRouteArgs {
 }
 
 /// generated route for
-/// [ExploreView]
-class ExploreViewRoute extends PageRouteInfo<void> {
-  const ExploreViewRoute({List<PageRouteInfo>? children})
+/// [EditProfileView]
+class EditProfileViewRoute extends PageRouteInfo<void> {
+  const EditProfileViewRoute({List<PageRouteInfo>? children})
       : super(
-          ExploreViewRoute.name,
+          EditProfileViewRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'ExploreViewRoute';
+  static const String name = 'EditProfileViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

@@ -11,6 +11,7 @@ import '../../features/home/presentation/views/notification_view.dart';
 import '../../features/home/presentation/views/search_view.dart';
 import '../../features/tweet/presentation/views/create_tweet_view.dart';
 import '../../features/tweet/presentation/views/twitter_reply_view.dart';
+import '../../features/user_profile/presentation/views/edit_profile_view.dart';
 import '../../features/user_profile/presentation/views/user_profile_view.dart';
 import '../../models/tweet_model.dart';
 import '../../models/user_model.dart';
@@ -38,10 +39,26 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(page: LoginViewRoute.page),
         AutoRoute(page: SignUpViewRoute.page),
-        AutoRoute(page: CreateTweetViewRoute.page),
-        AutoRoute(page: TwitterReplyViewRoute.page),
-        AutoRoute(page: ExploreViewRoute.page),
-        AutoRoute(page: UserProfileViewRoute.page),
+        AutoRoute(
+          page: CreateTweetViewRoute.page,
+          guards: [AuthGuard(ref: _ref)],
+        ),
+        AutoRoute(
+          page: TwitterReplyViewRoute.page,
+          guards: [AuthGuard(ref: _ref)],
+        ),
+        AutoRoute(
+          page: ExploreViewRoute.page,
+          guards: [AuthGuard(ref: _ref)],
+        ),
+        AutoRoute(
+          page: UserProfileViewRoute.page,
+          guards: [AuthGuard(ref: _ref)],
+        ),
+        AutoRoute(
+          page: EditProfileViewRoute.page,
+          guards: [AuthGuard(ref: _ref)],
+        ),
       ];
 }
 

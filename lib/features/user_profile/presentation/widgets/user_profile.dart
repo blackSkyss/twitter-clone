@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:twitter_clone/config/routes/app_router.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
 import 'package:twitter_clone/features/user_profile/presentation/widgets/follow_count.dart';
@@ -35,7 +37,10 @@ class UserProfile extends ConsumerWidget {
                             ? Container(
                                 color: Pallete.blueColor,
                               )
-                            : Image.network(user.bannerPic),
+                            : Image.network(
+                                user.bannerPic,
+                                fit: BoxFit.fitWidth,
+                              ),
                       ),
                       Positioned(
                         bottom: 0,
@@ -48,7 +53,11 @@ class UserProfile extends ConsumerWidget {
                         alignment: Alignment.bottomRight,
                         margin: const EdgeInsets.all(20),
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (currentUser.uid == user.uid) {
+                              context.router.push(const EditProfileViewRoute());
+                            }
+                          },
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),

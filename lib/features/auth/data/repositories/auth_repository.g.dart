@@ -35,7 +35,8 @@ final authStateProvider = StreamProvider<User?>.internal(
 );
 
 typedef AuthStateRef = StreamProviderRef<User?>;
-String _$getUserDataHash() => r'4b5b24e967f5368ee58a77f56f5c8b354100bc89';
+String _$getLastestUserProfileDataHash() =>
+    r'aac6e94749dfb0e02752a82908d9d78776b51607';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -58,6 +59,89 @@ class _SystemHash {
   }
 }
 
+typedef GetLastestUserProfileDataRef = AutoDisposeStreamProviderRef<UserModel?>;
+
+/// See also [getLastestUserProfileData].
+@ProviderFor(getLastestUserProfileData)
+const getLastestUserProfileDataProvider = GetLastestUserProfileDataFamily();
+
+/// See also [getLastestUserProfileData].
+class GetLastestUserProfileDataFamily extends Family<AsyncValue<UserModel?>> {
+  /// See also [getLastestUserProfileData].
+  const GetLastestUserProfileDataFamily();
+
+  /// See also [getLastestUserProfileData].
+  GetLastestUserProfileDataProvider call(
+    String uid,
+  ) {
+    return GetLastestUserProfileDataProvider(
+      uid,
+    );
+  }
+
+  @override
+  GetLastestUserProfileDataProvider getProviderOverride(
+    covariant GetLastestUserProfileDataProvider provider,
+  ) {
+    return call(
+      provider.uid,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getLastestUserProfileDataProvider';
+}
+
+/// See also [getLastestUserProfileData].
+class GetLastestUserProfileDataProvider
+    extends AutoDisposeStreamProvider<UserModel?> {
+  /// See also [getLastestUserProfileData].
+  GetLastestUserProfileDataProvider(
+    this.uid,
+  ) : super.internal(
+          (ref) => getLastestUserProfileData(
+            ref,
+            uid,
+          ),
+          from: getLastestUserProfileDataProvider,
+          name: r'getLastestUserProfileDataProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getLastestUserProfileDataHash,
+          dependencies: GetLastestUserProfileDataFamily._dependencies,
+          allTransitiveDependencies:
+              GetLastestUserProfileDataFamily._allTransitiveDependencies,
+        );
+
+  final String uid;
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetLastestUserProfileDataProvider && other.uid == uid;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, uid.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+String _$getUserDataHash() => r'4b5b24e967f5368ee58a77f56f5c8b354100bc89';
 typedef GetUserDataRef = AutoDisposeFutureProviderRef<UserModel>;
 
 /// See also [getUserData].

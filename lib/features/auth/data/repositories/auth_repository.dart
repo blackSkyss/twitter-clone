@@ -24,6 +24,15 @@ Stream<User?> authState(AuthStateRef ref) {
 }
 
 @riverpod
+Stream<UserModel?> getLastestUserProfileData(
+  GetLastestUserProfileDataRef ref,
+  String uid,
+) {
+  final authRepository = ref.watch(authRepositoryProvider);
+  return authRepository.getLastestUserProfileData(uid);
+}
+
+@riverpod
 Future<UserModel> getUserData(GetUserDataRef ref, String userId) {
   final authRepository = ref.watch(authRepositoryProvider);
   return authRepository.getUserData(userId);
@@ -96,6 +105,16 @@ class AuthRepository {
     await _auth.signOut();
   }
 
+  // Update user data
+  Future<void> updateUserData(UserModel user) {
+    return _users.doc(user.uid).update({
+      'name': user.name,
+      'bio': user.bio,
+      'bannerPic': user.bannerPic,
+      'profilePic': user.profilePic,
+    });
+  }
+
   // Get user data
   Future<UserModel> getUserData(String uid) async {
     if (uid.isEmpty) {
@@ -117,5 +136,22 @@ class AuthRepository {
     }
 
     return users;
+  }
+
+  // Get lastest user profile data
+  Stream<UserModel> getLastestUserProfileData(String uid) {
+    if (uid.isEmpty) {
+      final currentUser = _auth.currentUser;
+      return _users
+          .doc(currentUser!.uid)
+          .snapshots(includeMetadataChanges: true)
+          .map(
+            (event) => UserModel.fromMap(event.data() as Map<String, dynamic>),
+          );
+    }
+
+    return _users.doc(uid).snapshots(includeMetadataChanges: true).map(
+          (event) => UserModel.fromMap(event.data() as Map<String, dynamic>),
+        );
   }
 }

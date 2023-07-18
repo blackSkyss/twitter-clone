@@ -46,9 +46,15 @@ class TweetCard extends ConsumerWidget {
                     children: [
                       Container(
                         margin: const EdgeInsets.all(10),
-                        child: CircleAvatar(
-                          backgroundImage: NetworkImage(user.profilePic),
-                          radius: 22,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.router
+                                .push(UserProfileViewRoute(user: user));
+                          },
+                          child: CircleAvatar(
+                            backgroundImage: NetworkImage(user.profilePic),
+                            radius: 22,
+                          ),
                         ),
                       ),
                       Expanded(
