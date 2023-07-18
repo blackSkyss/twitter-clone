@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
+import 'package:twitter_clone/features/notifications/presentation/controller/notification_controller.dart';
 import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
 import 'package:twitter_clone/models/tweet_model.dart';
 import 'package:twitter_clone/util/commons/functions/common_firebase.dart';
 import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
+import 'package:twitter_clone/util/enums/notification_type_enum.dart';
 import 'package:twitter_clone/util/enums/tweet_type_enum.dart';
 import 'package:uuid/uuid.dart';
 
@@ -145,6 +147,8 @@ class TweetController extends _$TweetController {
   void likeTweet(Tweet tweet) async {
     final authRepository = ref.read(authRepositoryProvider);
     final tweetRepository = ref.read(tweetRepositoryProvider);
+    final notificationController =
+        ref.read(notificationControllerProvider.notifier);
 
     final user = await authRepository.getUserData('');
     List<String> likes = tweet.likes;
@@ -159,6 +163,12 @@ class TweetController extends _$TweetController {
     state = await AsyncValue.guard(
       () async {
         await tweetRepository.likeTweet(tweet);
+        notificationController.createNotification(
+          text: '${user.name} like your tweet!',
+          postId: tweet.id,
+          notificationType: NotificationType.like,
+          uid: tweet.uid,
+        );
       },
     );
   }

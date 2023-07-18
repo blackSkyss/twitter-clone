@@ -45,18 +45,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeView(),
       );
     },
-    NotificationViewRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const NotificationView(),
-      );
-    },
-    SearchViewRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const SearchView(),
-      );
-    },
     CreateTweetViewRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -87,6 +75,12 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           user: args.user,
         ),
+      );
+    },
+    NotificationViewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const NotificationView(),
       );
     },
   };
@@ -158,34 +152,6 @@ class HomeViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeViewRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [NotificationView]
-class NotificationViewRoute extends PageRouteInfo<void> {
-  const NotificationViewRoute({List<PageRouteInfo>? children})
-      : super(
-          NotificationViewRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NotificationViewRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [SearchView]
-class SearchViewRoute extends PageRouteInfo<void> {
-  const SearchViewRoute({List<PageRouteInfo>? children})
-      : super(
-          SearchViewRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'SearchViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -292,4 +258,18 @@ class UserProfileViewRouteArgs {
   String toString() {
     return 'UserProfileViewRouteArgs{key: $key, user: $user}';
   }
+}
+
+/// generated route for
+/// [NotificationView]
+class NotificationViewRoute extends PageRouteInfo<void> {
+  const NotificationViewRoute({List<PageRouteInfo>? children})
+      : super(
+          NotificationViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NotificationViewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }

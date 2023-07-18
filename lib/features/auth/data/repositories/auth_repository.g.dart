@@ -36,7 +36,7 @@ final authStateProvider = StreamProvider<User?>.internal(
 
 typedef AuthStateRef = StreamProviderRef<User?>;
 String _$getLastestUserProfileDataHash() =>
-    r'aac6e94749dfb0e02752a82908d9d78776b51607';
+    r'1329416b7990134f8e5b51809182012eb8644207';
 
 /// Copied from Dart SDK
 class _SystemHash {
