@@ -154,4 +154,18 @@ class AuthRepository {
           (event) => UserModel.fromMap(event.data() as Map<String, dynamic>),
         );
   }
+
+  // Follow user
+  Future<void> followUser(UserModel user) async {
+    return await _users.doc(user.uid).update({
+      'followers': user.followers,
+    });
+  }
+
+  // Follow user
+  Future<void> addToFollowing(UserModel currentUser) async {
+    return await _users.doc(currentUser.uid).update({
+      'following': currentUser.following,
+    });
+  }
 }

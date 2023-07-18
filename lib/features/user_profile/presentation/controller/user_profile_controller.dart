@@ -51,4 +51,31 @@ class UserProfileController extends _$UserProfileController {
       },
     );
   }
+
+  // Follow user
+  void followUser({
+    required UserModel user,
+    required UserModel currentUser,
+  }) async {
+    state = const AsyncValue.loading();
+    final authRepository = ref.read(authRepositoryProvider);
+
+    if (currentUser.following.contains(user.uid)) {
+      user.followers.remove(currentUser.uid);
+      currentUser.following.remove(user.uid);
+    } else {
+      user.followers.add(currentUser.uid);
+      currentUser.following.add(user.uid);
+    }
+
+    user = user.copyWith(followers: user.followers);
+    currentUser = currentUser.copyWith(following: currentUser.following);
+
+    state = await AsyncValue.guard(
+      () async {
+        await authRepository.followUser(user);
+        await authRepository.addToFollowing(currentUser);
+      },
+    );
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:twitter_clone/config/routes/app_router.dart';
 import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
 import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
+import 'package:twitter_clone/features/user_profile/presentation/controller/user_profile_controller.dart';
 import 'package:twitter_clone/features/user_profile/presentation/widgets/follow_count.dart';
 import 'package:twitter_clone/models/user_model.dart';
 import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
@@ -55,7 +56,16 @@ class UserProfile extends ConsumerWidget {
                         child: OutlinedButton(
                           onPressed: () {
                             if (currentUser.uid == user.uid) {
+                              // Edit profile
                               context.router.push(const EditProfileViewRoute());
+                            } else {
+                              // Follow / Unfollow
+                              ref
+                                  .read(userProfileControllerProvider.notifier)
+                                  .followUser(
+                                    user: user,
+                                    currentUser: currentUser,
+                                  );
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -70,7 +80,9 @@ class UserProfile extends ConsumerWidget {
                           child: Text(
                             currentUser.uid == user.uid
                                 ? 'Edit Profile'
-                                : 'Follow',
+                                : currentUser.following.contains(user.uid)
+                                    ? 'Unfollow'
+                                    : 'Follow',
                             style: const TextStyle(
                               color: Pallete.whiteColor,
                             ),
