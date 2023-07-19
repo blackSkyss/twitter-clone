@@ -51,6 +51,18 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const NotificationView(),
       );
     },
+    PaymentResultViewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PaymentResultView(),
+      );
+    },
+    PaymentViewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const PaymentView(),
+      );
+    },
     CreateTweetViewRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -176,6 +188,34 @@ class NotificationViewRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NotificationViewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PaymentResultView]
+class PaymentResultViewRoute extends PageRouteInfo<void> {
+  const PaymentResultViewRoute({List<PageRouteInfo>? children})
+      : super(
+          PaymentResultViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentResultViewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PaymentView]
+class PaymentViewRoute extends PageRouteInfo<void> {
+  const PaymentViewRoute({List<PageRouteInfo>? children})
+      : super(
+          PaymentViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'PaymentViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
