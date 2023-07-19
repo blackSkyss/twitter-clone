@@ -1,5 +1,4 @@
 import 'dart:io' show HttpStatus;
-
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:retrofit/retrofit.dart';

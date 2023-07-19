@@ -45,10 +45,26 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeView(),
       );
     },
+    NotificationViewRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const NotificationView(),
+      );
+    },
     CreateTweetViewRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const CreateTweetView(),
+      );
+    },
+    HashtagViewRoute.name: (routeData) {
+      final args = routeData.argsAs<HashtagViewRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: HashtagView(
+          key: args.key,
+          hashtag: args.hashtag,
+        ),
       );
     },
     TwitterReplyViewRoute.name: (routeData) {
@@ -74,22 +90,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: UserProfileView(
           key: args.key,
           user: args.user,
-        ),
-      );
-    },
-    NotificationViewRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const NotificationView(),
-      );
-    },
-    HashtagViewRoute.name: (routeData) {
-      final args = routeData.argsAs<HashtagViewRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: HashtagView(
-          key: args.key,
-          hashtag: args.hashtag,
         ),
       );
     },
@@ -167,6 +167,20 @@ class HomeViewRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [NotificationView]
+class NotificationViewRoute extends PageRouteInfo<void> {
+  const NotificationViewRoute({List<PageRouteInfo>? children})
+      : super(
+          NotificationViewRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'NotificationViewRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
 /// [CreateTweetView]
 class CreateTweetViewRoute extends PageRouteInfo<void> {
   const CreateTweetViewRoute({List<PageRouteInfo>? children})
@@ -178,6 +192,44 @@ class CreateTweetViewRoute extends PageRouteInfo<void> {
   static const String name = 'CreateTweetViewRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [HashtagView]
+class HashtagViewRoute extends PageRouteInfo<HashtagViewRouteArgs> {
+  HashtagViewRoute({
+    Key? key,
+    required String hashtag,
+    List<PageRouteInfo>? children,
+  }) : super(
+          HashtagViewRoute.name,
+          args: HashtagViewRouteArgs(
+            key: key,
+            hashtag: hashtag,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'HashtagViewRoute';
+
+  static const PageInfo<HashtagViewRouteArgs> page =
+      PageInfo<HashtagViewRouteArgs>(name);
+}
+
+class HashtagViewRouteArgs {
+  const HashtagViewRouteArgs({
+    this.key,
+    required this.hashtag,
+  });
+
+  final Key? key;
+
+  final String hashtag;
+
+  @override
+  String toString() {
+    return 'HashtagViewRouteArgs{key: $key, hashtag: $hashtag}';
+  }
 }
 
 /// generated route for
@@ -267,57 +319,5 @@ class UserProfileViewRouteArgs {
   @override
   String toString() {
     return 'UserProfileViewRouteArgs{key: $key, user: $user}';
-  }
-}
-
-/// generated route for
-/// [NotificationView]
-class NotificationViewRoute extends PageRouteInfo<void> {
-  const NotificationViewRoute({List<PageRouteInfo>? children})
-      : super(
-          NotificationViewRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'NotificationViewRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [HashtagView]
-class HashtagViewRoute extends PageRouteInfo<HashtagViewRouteArgs> {
-  HashtagViewRoute({
-    Key? key,
-    required String hashtag,
-    List<PageRouteInfo>? children,
-  }) : super(
-          HashtagViewRoute.name,
-          args: HashtagViewRouteArgs(
-            key: key,
-            hashtag: hashtag,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'HashtagViewRoute';
-
-  static const PageInfo<HashtagViewRouteArgs> page =
-      PageInfo<HashtagViewRouteArgs>(name);
-}
-
-class HashtagViewRouteArgs {
-  const HashtagViewRouteArgs({
-    this.key,
-    required this.hashtag,
-  });
-
-  final Key? key;
-
-  final String hashtag;
-
-  @override
-  String toString() {
-    return 'HashtagViewRouteArgs{key: $key, hashtag: $hashtag}';
   }
 }
