@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/util/providers/firebase_providers.dart';
+import '../../providers/firebase_providers.dart';
 import 'package:uuid/uuid.dart';
 
 final commonFirebaseStorageRepositoryProvider = Provider((ref) {

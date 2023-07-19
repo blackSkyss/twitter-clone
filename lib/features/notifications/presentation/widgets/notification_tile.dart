@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:twitter_clone/models/notification_model.dart' as model;
+import '../../../../models/notification_model.dart' as model;
 import '../../../../config/themes/theme_export.dart';
 import '../../../../util/constants/constants_export.dart';
 import '../../../../util/enums/notification_type_enum.dart';

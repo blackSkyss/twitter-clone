@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
-import 'package:twitter_clone/features/tweet/presentation/widgets/tweet_card.dart';
+import '../../data/repositories/tweet_repository.dart';
+import 'tweet_card.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
 
 class TweetList extends ConsumerWidget {

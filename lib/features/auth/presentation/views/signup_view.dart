@@ -2,11 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
-// ignore: depend_on_referenced_packages
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:twitter_clone/config/routes/app_router.dart';
-import 'package:twitter_clone/util/extensions/async_value_ui.dart';
-import 'package:twitter_clone/util/extensions/string_hardcoded.dart';
+import '../../../../config/routes/app_router.dart';
+import '../../../../util/extensions/async_value_ui.dart';
+import '../../../../util/extensions/string_hardcoded.dart';
 import '../../../../config/themes/theme_export.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
 import '../../../../util/constants/constants_export.dart';

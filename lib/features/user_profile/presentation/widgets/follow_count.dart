@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/themes/pallete.dart';
+import '../../../../config/themes/pallete.dart';
 
 class FollowCount extends StatelessWidget {
   final int count;

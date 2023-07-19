@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/themes/theme_export.dart';
+import '../../../config/themes/theme_export.dart';
 
 class RoundedSmallButton extends StatelessWidget {
   final VoidCallback onTap;

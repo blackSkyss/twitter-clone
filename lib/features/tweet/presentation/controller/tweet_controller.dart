@@ -1,14 +1,14 @@
 import 'dart:io';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
-import 'package:twitter_clone/features/notifications/presentation/controller/notification_controller.dart';
-import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
-import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/util/commons/functions/common_firebase.dart';
-import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
-import 'package:twitter_clone/util/enums/notification_type_enum.dart';
-import 'package:twitter_clone/util/enums/tweet_type_enum.dart';
+import '../../../auth/data/repositories/auth_repository.dart';
+import '../../../notifications/presentation/controller/notification_controller.dart';
+import '../../data/repositories/tweet_repository.dart';
+import '../../../../models/tweet_model.dart';
+import '../../../../util/commons/functions/common_firebase.dart';
+import '../../../../util/commons/widgets/widget_common_export.dart';
+import '../../../../util/enums/notification_type_enum.dart';
+import '../../../../util/enums/tweet_type_enum.dart';
 import 'package:uuid/uuid.dart';
 
 part 'tweet_controller.g.dart';

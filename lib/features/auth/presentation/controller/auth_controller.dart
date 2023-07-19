@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
-import 'package:twitter_clone/models/user_model.dart';
-import 'package:twitter_clone/util/enums/auth_enum.dart';
+import '../../data/repositories/auth_repository.dart';
+import '../../../../models/user_model.dart';
+import '../../../../util/enums/auth_enum.dart';
 part 'auth_controller.g.dart';
 
 final userProvider = StateProvider<UserModel?>((ref) => null);

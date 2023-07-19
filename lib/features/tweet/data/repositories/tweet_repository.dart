@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:twitter_clone/models/tweet_model.dart';
+import '../../../../models/tweet_model.dart';
 import '../../../../util/constants/constants_export.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../util/providers/firebase_providers.dart';

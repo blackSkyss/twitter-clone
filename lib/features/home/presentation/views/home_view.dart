@@ -3,8 +3,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:twitter_clone/config/routes/app_router.dart';
-import 'package:twitter_clone/features/home/presentation/widgets/side_draw.dart';
+import '../../../../config/routes/app_router.dart';
+import '../widgets/side_draw.dart';
 import '../../../../config/themes/theme_export.dart';
 import '../../../../util/constants/constants_export.dart';
 

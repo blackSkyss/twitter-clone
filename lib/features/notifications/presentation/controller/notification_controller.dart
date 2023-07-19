@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:twitter_clone/features/notifications/data/repositories/notification_repository.dart';
-import 'package:twitter_clone/models/notification_model.dart';
-import 'package:twitter_clone/util/enums/notification_type_enum.dart';
+import '../../data/repositories/notification_repository.dart';
+import '../../../../models/notification_model.dart';
+import '../../../../util/enums/notification_type_enum.dart';
 import 'package:uuid/uuid.dart';
 part 'notification_controller.g.dart';
 

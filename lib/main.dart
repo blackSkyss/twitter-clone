@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/config/routes/app_router.dart';
-import 'package:twitter_clone/config/themes/theme_export.dart';
+import 'config/routes/app_router.dart';
+import 'config/themes/theme_export.dart';
 import 'firebase_options.dart';
 
 void main() async {

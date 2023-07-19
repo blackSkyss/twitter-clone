@@ -1,11 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
-import 'package:twitter_clone/features/tweet/presentation/controller/tweet_controller.dart';
-import 'package:twitter_clone/features/tweet/presentation/widgets/tweet_card.dart';
-import 'package:twitter_clone/models/tweet_model.dart';
-import 'package:twitter_clone/util/extensions/extensions_export.dart';
+import '../../data/repositories/tweet_repository.dart';
+import '../controller/tweet_controller.dart';
+import '../widgets/tweet_card.dart';
+import '../../../../models/tweet_model.dart';
+import '../../../../util/extensions/extensions_export.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
 
 @RoutePage()

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:twitter_clone/util/enums/tweet_type_enum.dart';
+import '../util/enums/tweet_type_enum.dart';
 
 class Tweet {
   final String text;

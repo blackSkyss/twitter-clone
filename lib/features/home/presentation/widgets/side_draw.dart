@@ -1,12 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/config/routes/app_router.dart';
-import 'package:twitter_clone/config/themes/pallete.dart';
-import 'package:twitter_clone/features/auth/data/repositories/auth_repository.dart';
-import 'package:twitter_clone/features/auth/presentation/controller/auth_controller.dart';
-import 'package:twitter_clone/features/user_profile/presentation/controller/user_profile_controller.dart';
-import 'package:twitter_clone/util/commons/widgets/widget_common_export.dart';
+import '../../../../config/routes/app_router.dart';
+import '../../../../config/themes/pallete.dart';
+import '../../../auth/data/repositories/auth_repository.dart';
+import '../../../auth/presentation/controller/auth_controller.dart';
+import '../../../user_profile/presentation/controller/user_profile_controller.dart';
+import '../../../../util/commons/widgets/widget_common_export.dart';
 
 class SideDrawer extends ConsumerWidget {
   const SideDrawer({super.key});
@@ -38,6 +38,19 @@ class SideDrawer extends ConsumerWidget {
               onTap: () {
                 context.router.push(UserProfileViewRoute(user: currentUser));
               },
+            ),
+            ListTile(
+              leading: const Icon(
+                Icons.payment,
+                size: 30,
+              ),
+              title: const Text(
+                'Payment',
+                style: TextStyle(
+                  fontSize: 22,
+                ),
+              ),
+              onTap: () {},
             ),
             ListTile(
               leading: const Icon(

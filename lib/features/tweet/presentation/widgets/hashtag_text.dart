@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:twitter_clone/config/routes/app_router.dart';
-
+import '../../../../config/routes/app_router.dart';
 import '../../../../config/themes/theme_export.dart';
 
 class HashtagText extends StatelessWidget {

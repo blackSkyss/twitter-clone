@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:twitter_clone/features/tweet/data/repositories/tweet_repository.dart';
+import '../../data/repositories/tweet_repository.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
 import '../widgets/tweet_card.dart';
 

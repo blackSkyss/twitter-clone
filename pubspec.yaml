@@ -50,6 +50,11 @@ dependencies:
   # Handle exception
   fpdart: ^0.6.0
 
+  # Networking
+  retrofit: ^4.0.1
+  dio: ^5.3.0
+  awesome_dio_interceptor: ^1.0.0
+
   # Other
   flutter_svg: ^2.0.7
   image_picker: ^1.0.1
@@ -65,6 +70,7 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^2.0.0
+  retrofit_generator: ^7.0.2
   riverpod_generator: ^2.2.3
   auto_route_generator: ^7.2.0
   build_runner: ^2.4.4

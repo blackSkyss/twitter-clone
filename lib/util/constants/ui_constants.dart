@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:twitter_clone/util/constants/constants_export.dart';
+import 'constants_export.dart';
 import '../../config/themes/theme_export.dart';
 
 class UIConstants {

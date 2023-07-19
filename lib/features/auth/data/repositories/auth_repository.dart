@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:twitter_clone/models/user_model.dart';
-import 'package:twitter_clone/util/providers/firebase_providers.dart';
+import '../../../../models/user_model.dart';
+import '../../../../util/providers/firebase_providers.dart';
 import '../../../../util/constants/constants_export.dart';
 
 part 'auth_repository.g.dart';

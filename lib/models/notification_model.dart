@@ -1,4 +1,4 @@
-import 'package:twitter_clone/util/enums/notification_type_enum.dart';
+import '../util/enums/notification_type_enum.dart';
 
 class Notification {
   final String text;
