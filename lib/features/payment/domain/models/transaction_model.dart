@@ -11,6 +11,7 @@ class Transaction {
   final String PayUrl;
   final String Deeplink;
   final String QrCodeUrl;
+  final String Applink;
   Transaction({
     required this.RechargeID,
     required this.RechargeTime,
@@ -21,6 +22,7 @@ class Transaction {
     required this.PayUrl,
     required this.Deeplink,
     required this.QrCodeUrl,
+    required this.Applink,
   });
 
   Transaction copyWith({
@@ -33,6 +35,7 @@ class Transaction {
     String? PayUrl,
     String? Deeplink,
     String? QrCodeUrl,
+    String? Applink,
   }) {
     return Transaction(
       RechargeID: RechargeID ?? this.RechargeID,
@@ -44,6 +47,7 @@ class Transaction {
       PayUrl: PayUrl ?? this.PayUrl,
       Deeplink: Deeplink ?? this.Deeplink,
       QrCodeUrl: QrCodeUrl ?? this.QrCodeUrl,
+      Applink: Applink ?? this.Applink,
     );
   }
 
@@ -59,6 +63,7 @@ class Transaction {
     result.addAll({'PayUrl': PayUrl});
     result.addAll({'Deeplink': Deeplink});
     result.addAll({'QrCodeUrl': QrCodeUrl});
+    result.addAll({'Applink': Applink});
 
     return result;
   }
@@ -74,6 +79,7 @@ class Transaction {
       PayUrl: map['PayUrl'] ?? '',
       Deeplink: map['Deeplink'] ?? '',
       QrCodeUrl: map['QrCodeUrl'] ?? '',
+      Applink: map['Applink'] ?? '',
     );
   }
 
@@ -84,7 +90,7 @@ class Transaction {
 
   @override
   String toString() {
-    return 'Transaction(RechargeID: $RechargeID, RechargeTime: $RechargeTime, Amount: $Amount, Content: $Content, TransactionType: $TransactionType, RechargeStatus: $RechargeStatus, PayUrl: $PayUrl, Deeplink: $Deeplink, QrCodeUrl: $QrCodeUrl)';
+    return 'Transaction(RechargeID: $RechargeID, RechargeTime: $RechargeTime, Amount: $Amount, Content: $Content, TransactionType: $TransactionType, RechargeStatus: $RechargeStatus, PayUrl: $PayUrl, Deeplink: $Deeplink, QrCodeUrl: $QrCodeUrl, Applink: $Applink)';
   }
 
   @override
@@ -100,7 +106,8 @@ class Transaction {
         other.RechargeStatus == RechargeStatus &&
         other.PayUrl == PayUrl &&
         other.Deeplink == Deeplink &&
-        other.QrCodeUrl == QrCodeUrl;
+        other.QrCodeUrl == QrCodeUrl &&
+        other.Applink == Applink;
   }
 
   @override
@@ -113,6 +120,7 @@ class Transaction {
         RechargeStatus.hashCode ^
         PayUrl.hashCode ^
         Deeplink.hashCode ^
-        QrCodeUrl.hashCode;
+        QrCodeUrl.hashCode ^
+        Applink.hashCode;
   }
 }
