@@ -36,7 +36,9 @@ class SideDrawer extends ConsumerWidget {
                 ),
               ),
               onTap: () {
-                context.router.push(UserProfileViewRoute(user: currentUser));
+                if (context.mounted) {
+                  context.router.push(UserProfileViewRoute(user: currentUser));
+                }
               },
             ),
             ListTile(
@@ -50,7 +52,11 @@ class SideDrawer extends ConsumerWidget {
                   fontSize: 22,
                 ),
               ),
-              onTap: () {},
+              onTap: () {
+                if (context.mounted) {
+                  context.router.push(const PaymentViewRoute());
+                }
+              },
             ),
             ListTile(
               leading: const Icon(

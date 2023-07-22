@@ -1,6 +1,11 @@
 class AssetsConstants {
-  static const String placeHolder = 'assets/images/placeholder_news.jpg';
   static const String _svgsPath = 'assets/svgs';
+  static const String _imgsPath = 'assets/images';
+  static const String placeHolder = '$_imgsPath/placeholder_news.jpg';
+  static const String momoLogo = '$_imgsPath/momo_logo.png';
+  static const String zalopayLogo = '$_imgsPath/zalopay_logo.png';
+  static const String paypalLogo = '$_imgsPath/paypal_logo.png';
+
   static const String twitterLogo = '$_svgsPath/twitter_logo.svg';
   static const String homeFilledIcon = '$_svgsPath/home_filled.svg';
   static const String homeOutlinedIcon = '$_svgsPath/home_outlined.svg';
