@@ -55,6 +55,9 @@ dependencies:
   dio: ^5.3.0
   awesome_dio_interceptor: ^1.0.0
 
+  # Payment
+  flutter_zalopay_sdk: ^0.1.13
+
   # Other
   flutter_svg: ^2.0.7
   image_picker: ^1.0.1

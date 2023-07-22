@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:auto_route/auto_route.dart';
-import '../../../../config/themes/theme_export.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../config/themes/theme_export.dart';
 import '../../../../util/constants/constants_export.dart';
+import '../../../../util/enums/payment_enum.dart';
 import '../widgets/amount_field.dart';
 import '../widgets/label_text.dart';
 import '../widgets/list_tile_payment.dart';
@@ -16,10 +17,37 @@ class PaymentView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.of(context).size;
     final amountController = useTextEditingController();
-    final payMethod = useState(0);
+    final payMethod = useState(PaymentType.momo.type);
 
+    // Change payment method
     void onchangePayMethod(int val) {
       payMethod.value = val;
+    }
+
+    // Handle Momo
+    void handleMomo() {}
+
+    // Handle Zalopay
+    void handleZalopay() async {}
+
+    // Handle Paypal
+    void handlePaypal() {}
+
+    // Payment order
+    void paymentOrder() {
+      switch (payMethod.value) {
+        case 0:
+          handleMomo;
+          break;
+        case 1:
+          handleZalopay;
+          break;
+        case 2:
+          handlePaypal;
+          break;
+        default:
+          handleMomo;
+      }
     }
 
     return Scaffold(
@@ -49,7 +77,7 @@ class PaymentView extends HookConsumerWidget {
                 width: size.width * 0.1,
                 path: AssetsConstants.momoLogo,
                 title: 'Momo',
-                value: 0,
+                value: PaymentType.momo.type,
                 onChange: onchangePayMethod,
               ),
               SizedBox(height: size.height * 0.02),
@@ -59,7 +87,7 @@ class PaymentView extends HookConsumerWidget {
                 width: size.width * 0.1,
                 path: AssetsConstants.zalopayLogo,
                 title: 'Zalo Pay',
-                value: 1,
+                value: PaymentType.zalopay.type,
                 onChange: onchangePayMethod,
               ),
               SizedBox(height: size.height * 0.02),
@@ -69,14 +97,14 @@ class PaymentView extends HookConsumerWidget {
                 width: size.width * 0.1,
                 path: AssetsConstants.paypalLogo,
                 title: 'Paypal',
-                value: 2,
+                value: PaymentType.paypal.type,
                 onChange: onchangePayMethod,
               ),
               SizedBox(height: size.height * 0.2),
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: paymentOrder,
                   style: ElevatedButton.styleFrom(
                       foregroundColor: Pallete.whiteColor,
                       backgroundColor: Pallete.blueColor,
