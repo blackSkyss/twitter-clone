@@ -23,4 +23,6 @@ class AssetsConstants {
   static const String verifiedIcon = '$_svgsPath/verified.svg';
   static const String defaultProfilePic =
       'https://taphoammo.net/img/twitter-new-full-avatar-verify-hotmail-ngam-1-7-30-ngay_604156.png';
+  static const String defaultBanner =
+      'https://www.system-concepts.com/wp-content/uploads/2018/09/Contextual-User-Research-Concept-Banner.jpg';
 }

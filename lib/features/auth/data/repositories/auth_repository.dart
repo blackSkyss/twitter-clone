@@ -90,7 +90,7 @@ class AuthRepository {
       followers: [],
       following: [],
       profilePic: AssetsConstants.defaultProfilePic,
-      bannerPic: credential.user!.photoURL ?? 'empty',
+      bannerPic: AssetsConstants.defaultBanner,
       uid: credential.user!.uid,
       bio: 'empty',
       isTwitterBlue: false,
