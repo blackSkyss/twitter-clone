@@ -22,6 +22,7 @@ class PaymentView extends HookConsumerWidget {
     final size = MediaQuery.of(context).size;
     final amountController = useTextEditingController();
     final payMethod = useState(PaymentType.momo.type);
+    final state = ref.watch(transactionControllerProvider);
 
     // Handle error
     ref.listen<AsyncValue>(
@@ -92,68 +93,70 @@ class PaymentView extends HookConsumerWidget {
         title: const Text('Payment'),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.only(top: 20),
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const LabelText(content: 'Balance: 10000000'),
-              SizedBox(height: size.height * 0.02),
-              const LabelText(content: 'Amount'),
-              SizedBox(height: size.height * 0.02),
-              AmountField(controller: amountController),
-              SizedBox(height: size.height * 0.02),
-              const LabelText(content: 'Payment Methods'),
-              SizedBox(height: size.height * 0.02),
-              // Momo-----------
-              ListTilePayment(
-                payMethod: payMethod.value,
-                width: size.width * 0.1,
-                path: AssetsConstants.momoLogo,
-                title: 'Momo',
-                value: PaymentType.momo.type,
-                onChange: onchangePayMethod,
-              ),
-              SizedBox(height: size.height * 0.02),
-              // ZaloPay-----------
-              ListTilePayment(
-                payMethod: payMethod.value,
-                width: size.width * 0.1,
-                path: AssetsConstants.zalopayLogo,
-                title: 'Zalo Pay',
-                value: PaymentType.zalopay.type,
-                onChange: onchangePayMethod,
-              ),
-              SizedBox(height: size.height * 0.02),
-              // Paypal-----------
-              ListTilePayment(
-                payMethod: payMethod.value,
-                width: size.width * 0.1,
-                path: AssetsConstants.paypalLogo,
-                title: 'Paypal',
-                value: PaymentType.paypal.type,
-                onChange: onchangePayMethod,
-              ),
-              SizedBox(height: size.height * 0.2),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: handleZalopay,
-                  style: ElevatedButton.styleFrom(
-                      foregroundColor: Pallete.whiteColor,
-                      backgroundColor: Pallete.blueColor,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )),
-                  child: const Text('Continue'),
+      body: state.isLoading
+          ? const Loader()
+          : SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.only(top: 20),
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const LabelText(content: 'Balance: 10000000'),
+                    SizedBox(height: size.height * 0.02),
+                    const LabelText(content: 'Amount'),
+                    SizedBox(height: size.height * 0.02),
+                    AmountField(controller: amountController),
+                    SizedBox(height: size.height * 0.02),
+                    const LabelText(content: 'Payment Methods'),
+                    SizedBox(height: size.height * 0.02),
+                    // Momo-----------
+                    ListTilePayment(
+                      payMethod: payMethod.value,
+                      width: size.width * 0.1,
+                      path: AssetsConstants.momoLogo,
+                      title: 'Momo',
+                      value: PaymentType.momo.type,
+                      onChange: onchangePayMethod,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    // ZaloPay-----------
+                    ListTilePayment(
+                      payMethod: payMethod.value,
+                      width: size.width * 0.1,
+                      path: AssetsConstants.zalopayLogo,
+                      title: 'Zalo Pay',
+                      value: PaymentType.zalopay.type,
+                      onChange: onchangePayMethod,
+                    ),
+                    SizedBox(height: size.height * 0.02),
+                    // Paypal-----------
+                    ListTilePayment(
+                      payMethod: payMethod.value,
+                      width: size.width * 0.1,
+                      path: AssetsConstants.paypalLogo,
+                      title: 'Paypal',
+                      value: PaymentType.paypal.type,
+                      onChange: onchangePayMethod,
+                    ),
+                    SizedBox(height: size.height * 0.2),
+                    SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        onPressed: handleZalopay,
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Pallete.whiteColor,
+                            backgroundColor: Pallete.blueColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                        child: const Text('Continue'),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
     );
   }
 }

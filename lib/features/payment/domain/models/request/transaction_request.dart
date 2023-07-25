@@ -1,11 +1,9 @@
 import 'dart:convert';
 
 class TransactionRequest {
-  final String email;
   final int amount;
   final String redirectUrl;
   TransactionRequest({
-    required this.email,
     required this.amount,
     required this.redirectUrl,
   });
@@ -13,7 +11,6 @@ class TransactionRequest {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'email': email});
     result.addAll({'amount': amount});
     result.addAll({'redirectUrl': redirectUrl});
 
@@ -22,7 +19,6 @@ class TransactionRequest {
 
   factory TransactionRequest.fromMap(Map<String, dynamic> map) {
     return TransactionRequest(
-      email: map['email'] ?? '',
       amount: map['amount']?.toInt() ?? 0,
       redirectUrl: map['redirectUrl'] ?? '',
     );

@@ -21,9 +21,9 @@ class TransactionController extends _$TransactionController {
     final authRepository = ref.read(authRepositoryProvider);
     final transactionRepository = ref.read(transactionRepositoryProvider);
 
+    // ignore: unused_local_variable
     final user = await authRepository.getUserData('');
     TransactionRequest request = TransactionRequest(
-      email: "thanhle@gmail.com",
       amount: amount,
       redirectUrl: APIConstants.redirectUrl,
     );

@@ -58,6 +58,10 @@ dependencies:
   # Payment
   flutter_zalopay_sdk: ^0.1.13
 
+  # Animation
+  lottie: ^2.5.0
+  like_button: ^2.0.5
+
   # Other
   flutter_svg: ^2.0.7
   image_picker: ^1.0.1
@@ -66,7 +70,7 @@ dependencies:
   timeago: ^3.5.0
   any_link_preview: ^3.0.1
   cached_network_image: ^3.2.3
-  like_button: ^2.0.5
+ 
 
 dev_dependencies:
   flutter_test:

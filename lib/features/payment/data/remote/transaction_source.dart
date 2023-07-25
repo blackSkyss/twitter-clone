@@ -19,7 +19,7 @@ abstract class TransactionSource {
     @Header("Content-Type") String contentType,
   );
 
-  @POST('/wallettransactions/createZalopayTransaction')
+  @POST('/walletTransactions/createZalopayTransaction')
   Future<HttpResponse<TransactionZalo>> createTransactionZalo(
     @Body() TransactionRequest request,
     @Header("Content-Type") String contentType,

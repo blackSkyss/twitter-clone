@@ -13,7 +13,7 @@ class _TransactionSource implements TransactionSource {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://192.168.1.3:8000/odata';
+    baseUrl ??= 'https://bmos-system.azurewebsites.net/odata';
   }
 
   final Dio _dio;
@@ -74,7 +74,7 @@ class _TransactionSource implements TransactionSource {
     )
             .compose(
               _dio.options,
-              '/wallettransactions/createZalopayTransaction',
+              '/walletTransactions/createZalopayTransaction',
               queryParameters: queryParameters,
               data: _data,
             )
