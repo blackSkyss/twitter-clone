@@ -2,9 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
 import '../../../../config/themes/theme_export.dart';
+import '../../../../util/commons/widgets/widget_common_export.dart';
 import '../../../../util/constants/constants_export.dart';
 import '../../../../util/enums/payment_enum.dart';
+import '../../../../util/extensions/extensions_export.dart';
+import '../controller/transaction_controller.dart';
 import '../widgets/amount_field.dart';
 import '../widgets/label_text.dart';
 import '../widgets/list_tile_payment.dart';
@@ -19,6 +23,12 @@ class PaymentView extends HookConsumerWidget {
     final amountController = useTextEditingController();
     final payMethod = useState(PaymentType.momo.type);
 
+    // Handle error
+    ref.listen<AsyncValue>(
+      transactionControllerProvider,
+      (_, state) => state.showAlertDialogOnError(context),
+    );
+
     // Change payment method
     void onchangePayMethod(int val) {
       payMethod.value = val;
@@ -28,7 +38,33 @@ class PaymentView extends HookConsumerWidget {
     void handleMomo() {}
 
     // Handle Zalopay
-    void handleZalopay() async {}
+    void handleZalopay() async {
+      final token = await ref
+          .read(transactionControllerProvider.notifier)
+          .createTransaction(
+            int.parse(amountController.text.trim()),
+            payMethod.value,
+          );
+
+      FlutterZaloPaySdk.payOrder(zpToken: token).listen((event) {
+        switch (event) {
+          case FlutterZaloPayStatus.cancelled:
+            showSnackBar(context: context, content: "Order has been canceled!");
+            break;
+          case FlutterZaloPayStatus.success:
+            showSnackBar(
+                context: context,
+                content:
+                    "Order has been successfully paid with amount: ${amountController.text}");
+            break;
+          case FlutterZaloPayStatus.failed:
+            showSnackBar(context: context, content: "Order payment failed!");
+            break;
+          default:
+            showSnackBar(context: context, content: "Order payment failed");
+        }
+      });
+    }
 
     // Handle Paypal
     void handlePaypal() {}
@@ -37,16 +73,16 @@ class PaymentView extends HookConsumerWidget {
     void paymentOrder() {
       switch (payMethod.value) {
         case 0:
-          handleMomo;
+          handleMomo();
           break;
         case 1:
-          handleZalopay;
+          handleZalopay();
           break;
         case 2:
-          handlePaypal;
+          handlePaypal();
           break;
         default:
-          handleMomo;
+          handleMomo();
       }
     }
 
@@ -104,7 +140,7 @@ class PaymentView extends HookConsumerWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: paymentOrder,
+                  onPressed: handleZalopay,
                   style: ElevatedButton.styleFrom(
                       foregroundColor: Pallete.whiteColor,
                       backgroundColor: Pallete.blueColor,

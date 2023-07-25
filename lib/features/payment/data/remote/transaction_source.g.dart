@@ -13,7 +13,7 @@ class _TransactionSource implements TransactionSource {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'http://localhost:8000/odata';
+    baseUrl ??= 'http://192.168.1.3:8000/odata';
   }
 
   final Dio _dio;
@@ -21,21 +21,26 @@ class _TransactionSource implements TransactionSource {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<Transaction>> createTransaction(
-      TransactionRequest request) async {
+  Future<HttpResponse<TransactionMomo>> createTransactionMomo(
+    TransactionRequest request,
+    String contentType,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
-    final _data = request;
+    final _headers = <String, dynamic>{r'Content-Type': contentType};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toMap());
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<Transaction>>(Options(
+        _setStreamType<HttpResponse<TransactionMomo>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/wallettransactions',
+              '/walletTransactions/createMomoTransaction',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -44,7 +49,41 @@ class _TransactionSource implements TransactionSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = Transaction.fromMap(_result.data!);
+    final value = TransactionMomo.fromMap(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<TransactionZalo>> createTransactionZalo(
+    TransactionRequest request,
+    String contentType,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Content-Type': contentType};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toMap());
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<TransactionZalo>>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/wallettransactions/createZalopayTransaction',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = TransactionZalo.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
