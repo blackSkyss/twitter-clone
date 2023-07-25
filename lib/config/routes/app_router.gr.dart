@@ -52,9 +52,16 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     PaymentResultViewRoute.name: (routeData) {
+      final args = routeData.argsAs<PaymentResultViewRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PaymentResultView(),
+        child: PaymentResultView(
+          key: args.key,
+          status: args.status,
+          title: args.title,
+          message: args.message,
+          amount: args.amount,
+        ),
       );
     },
     PaymentViewRoute.name: (routeData) {
@@ -194,16 +201,55 @@ class NotificationViewRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [PaymentResultView]
-class PaymentResultViewRoute extends PageRouteInfo<void> {
-  const PaymentResultViewRoute({List<PageRouteInfo>? children})
-      : super(
+class PaymentResultViewRoute extends PageRouteInfo<PaymentResultViewRouteArgs> {
+  PaymentResultViewRoute({
+    Key? key,
+    required PaymentStatusType status,
+    required String title,
+    required String message,
+    required String amount,
+    List<PageRouteInfo>? children,
+  }) : super(
           PaymentResultViewRoute.name,
+          args: PaymentResultViewRouteArgs(
+            key: key,
+            status: status,
+            title: title,
+            message: message,
+            amount: amount,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'PaymentResultViewRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PaymentResultViewRouteArgs> page =
+      PageInfo<PaymentResultViewRouteArgs>(name);
+}
+
+class PaymentResultViewRouteArgs {
+  const PaymentResultViewRouteArgs({
+    this.key,
+    required this.status,
+    required this.title,
+    required this.message,
+    required this.amount,
+  });
+
+  final Key? key;
+
+  final PaymentStatusType status;
+
+  final String title;
+
+  final String message;
+
+  final String amount;
+
+  @override
+  String toString() {
+    return 'PaymentResultViewRouteArgs{key: $key, status: $status, title: $title, message: $message, amount: $amount}';
+  }
 }
 
 /// generated route for

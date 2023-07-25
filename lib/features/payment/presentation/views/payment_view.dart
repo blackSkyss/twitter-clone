@@ -1,12 +1,15 @@
+// ignore_for_file: unused_element
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
+import '../../../../config/routes/app_router.dart';
 import '../../../../config/themes/theme_export.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
 import '../../../../util/constants/constants_export.dart';
 import '../../../../util/enums/payment_enum.dart';
+import '../../../../util/enums/payment_status_enum.dart';
 import '../../../../util/extensions/extensions_export.dart';
 import '../controller/transaction_controller.dart';
 import '../widgets/amount_field.dart';
@@ -50,19 +53,47 @@ class PaymentView extends HookConsumerWidget {
       FlutterZaloPaySdk.payOrder(zpToken: token).listen((event) {
         switch (event) {
           case FlutterZaloPayStatus.cancelled:
-            showSnackBar(context: context, content: "Order has been canceled!");
+            context.router.push(
+              PaymentResultViewRoute(
+                status: PaymentStatusType.cancel,
+                title: 'CANCELED!',
+                message: 'Order has been canceled!',
+                amount: amountController.text.trim(),
+              ),
+            );
             break;
           case FlutterZaloPayStatus.success:
-            showSnackBar(
-                context: context,
-                content:
-                    "Order has been successfully paid with amount: ${amountController.text}");
+            context.router.push(
+              PaymentResultViewRoute(
+                status: PaymentStatusType.success,
+                title: 'SUCCESSFULLY',
+                message: 'Order has been successfully paid',
+                amount: amountController.text.trim(),
+              ),
+            );
+
+            amountController.text = '';
+            payMethod.value = PaymentType.momo.type;
             break;
           case FlutterZaloPayStatus.failed:
-            showSnackBar(context: context, content: "Order payment failed!");
+            context.router.push(
+              PaymentResultViewRoute(
+                status: PaymentStatusType.fail,
+                title: 'FAILED!',
+                message: 'Order payment failed!',
+                amount: amountController.text.trim(),
+              ),
+            );
             break;
           default:
-            showSnackBar(context: context, content: "Order payment failed");
+            context.router.push(
+              PaymentResultViewRoute(
+                status: PaymentStatusType.fail,
+                title: 'FAILED!',
+                message: 'Order payment failed!',
+                amount: amountController.text.trim(),
+              ),
+            );
         }
       });
     }
@@ -72,21 +103,31 @@ class PaymentView extends HookConsumerWidget {
 
     // Payment order
     void paymentOrder() {
-      switch (payMethod.value) {
-        case 0:
-          handleMomo();
-          break;
-        case 1:
-          handleZalopay();
-          break;
-        case 2:
-          handlePaypal();
-          break;
-        default:
-          handleMomo();
+      if (amountController.text.isEmpty) {
+        showSnackBar(context: context, content: 'Amount is empty');
+        return;
+      }
+
+      if (int.parse(amountController.text.trim()) < 10000 ||
+          int.parse(amountController.text.trim()) > 10000000) {
+        showSnackBar(
+            context: context,
+            content: 'Amount min is 10.000 and max is 10.000.000');
+        return;
+      }
+
+      if (payMethod.value == PaymentType.momo.type) {
+        showSnackBar(context: context, content: 'Momo is coming soon!');
+        // handleMomo();
+      } else if (payMethod.value == PaymentType.zalopay.type) {
+        handleZalopay();
+      } else {
+        showSnackBar(context: context, content: 'Paypal is coming soon!');
+        // handlePaypal();
       }
     }
 
+    // UI-----
     return Scaffold(
       backgroundColor: Pallete.backgroupPayment,
       appBar: AppBar(
@@ -143,13 +184,14 @@ class PaymentView extends HookConsumerWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: handleZalopay,
+                        onPressed: paymentOrder,
                         style: ElevatedButton.styleFrom(
-                            foregroundColor: Pallete.whiteColor,
-                            backgroundColor: Pallete.blueColor,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            )),
+                          foregroundColor: Pallete.whiteColor,
+                          backgroundColor: Pallete.blueColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
                         child: const Text('Continue'),
                       ),
                     ),

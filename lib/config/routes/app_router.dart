@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../features/payment/presentation/views/payment_result_view.dart';
 import '../../features/payment/presentation/views/payment_view.dart';
+import '../../util/enums/payment_status_enum.dart';
 import 'guard/auth_guard.dart';
 import '../../features/auth/presentation/views/login_view.dart';
 import '../../features/auth/presentation/views/signup_view.dart';
@@ -67,12 +68,10 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: PaymentViewRoute.page,
-          children: [
-            AutoRoute(
-              page: PaymentResultViewRoute.page,
-              guards: [AuthGuard(ref: _ref)],
-            ),
-          ],
+          guards: [AuthGuard(ref: _ref)],
+        ),
+        AutoRoute(
+          page: PaymentResultViewRoute.page,
           guards: [AuthGuard(ref: _ref)],
         ),
       ];
