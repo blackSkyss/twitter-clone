@@ -20,17 +20,20 @@ class TransactionController extends _$TransactionController {
     state = const AsyncValue.loading();
     final authRepository = ref.read(authRepositoryProvider);
     final transactionRepository = ref.read(transactionRepositoryProvider);
+    final typeEnum = type.toPaymentTypeEnum();
 
     // ignore: unused_local_variable
     final user = await authRepository.getUserData('');
     TransactionRequest request = TransactionRequest(
       amount: amount,
-      redirectUrl: APIConstants.redirectUrl,
+      redirectUrl: typeEnum == PaymentType.zalopay
+          ? 'Nothing'
+          : APIConstants.redirectUrl,
     );
 
     state = await AsyncValue.guard(
       () async {
-        switch (type.toPaymentTypeEnum()) {
+        switch (typeEnum) {
           case PaymentType.momo:
             final res = await transactionRepository.createTransactionMomo(
               request: request,

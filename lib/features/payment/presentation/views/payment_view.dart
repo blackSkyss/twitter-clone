@@ -1,9 +1,11 @@
 // ignore_for_file: unused_element
+import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
+import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../config/routes/app_router.dart';
 import '../../../../config/themes/theme_export.dart';
@@ -23,16 +25,75 @@ class PaymentView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Init
     final size = MediaQuery.of(context).size;
     final amountController = useTextEditingController();
     final payMethod = useState(PaymentType.momo.type);
     final state = ref.watch(transactionControllerProvider);
+    StreamSubscription? sub;
 
-    // Handle error
+    // Handle error (Controller)
     ref.listen<AsyncValue>(
       transactionControllerProvider,
       (_, state) => state.showAlertDialogOnError(context),
     );
+
+    // Handle deeplink (Momo)
+    Future<void> initUniLinks() async {
+      sub = linkStream.listen((String? link) {
+        if (link != null) {
+          var uri = Uri.parse(link);
+          if (uri.queryParameters['amount'] != null &&
+              uri.queryParameters['resultCode'] != null) {
+            final status =
+                int.parse(uri.queryParameters['resultCode'] as String);
+            final amount = uri.queryParameters['amount'] as String;
+
+            if (status == 9000) {
+              context.router.push(
+                PaymentResultViewRoute(
+                  status: PaymentStatusType.success,
+                  title: 'SUCCESSFULLY',
+                  message: 'Order has been successfully paid',
+                  amount: amount,
+                ),
+              );
+
+              amountController.text = '';
+              payMethod.value = PaymentType.momo.type;
+            } else if (status == 1006) {
+              context.router.push(
+                PaymentResultViewRoute(
+                  status: PaymentStatusType.cancel,
+                  title: 'CANCELED!',
+                  message: 'Order has been canceled!',
+                  amount: amount,
+                ),
+              );
+            } else {
+              context.router.push(
+                PaymentResultViewRoute(
+                  status: PaymentStatusType.fail,
+                  title: 'FAILED!',
+                  message: 'Order payment failed!',
+                  amount: amount,
+                ),
+              );
+            }
+          }
+        }
+      }, onError: (err) {
+        // Handle exception by warning the user their action did not succeed
+      });
+    }
+
+    // Init and dispose stream
+    useEffect(() {
+      initUniLinks();
+      return () async {
+        await sub?.cancel();
+      };
+    }, const []);
 
     // Change payment method
     void onchangePayMethod(int val) {

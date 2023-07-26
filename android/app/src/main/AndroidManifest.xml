@@ -33,12 +33,12 @@
                     android:host="app" />
             </intent-filter>
 
-            <!-- Config for Momo -->
+            <!-- Config for Momo (Deeplink)-->
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="payment-aae40.web.app" android:pathPrefix="/payment-result/" />  
+                <data android:scheme="https" android:host="payment-aae40.web.app" />  
             </intent-filter>
 
             <meta-data
