@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../config/routes/app_router.dart';
 import '../../../../config/themes/theme_export.dart';
 import '../../../../util/commons/widgets/widget_common_export.dart';
@@ -39,7 +40,23 @@ class PaymentView extends HookConsumerWidget {
     }
 
     // Handle Momo
-    void handleMomo() {}
+    void handleMomo() async {
+      final link = await ref
+          .read(transactionControllerProvider.notifier)
+          .createTransaction(
+            int.parse(amountController.text.trim()),
+            payMethod.value,
+          );
+
+      if (await canLaunchUrl(Uri.parse(link))) {
+        await launchUrl(Uri.parse(link));
+      } else {
+        showSnackBar(
+          context: context,
+          content: 'Cannot launch deeplink: $link',
+        );
+      }
+    }
 
     // Handle Zalopay
     void handleZalopay() async {
@@ -117,8 +134,8 @@ class PaymentView extends HookConsumerWidget {
       }
 
       if (payMethod.value == PaymentType.momo.type) {
-        showSnackBar(context: context, content: 'Momo is coming soon!');
-        // handleMomo();
+        // showSnackBar(context: context, content: 'Momo is coming soon!');
+        handleMomo();
       } else if (payMethod.value == PaymentType.zalopay.type) {
         handleZalopay();
       } else {

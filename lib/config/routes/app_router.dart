@@ -71,6 +71,7 @@ class AppRouter extends _$AppRouter {
           guards: [AuthGuard(ref: _ref)],
         ),
         AutoRoute(
+          path: '/payment-result',
           page: PaymentResultViewRoute.page,
           guards: [AuthGuard(ref: _ref)],
         ),
