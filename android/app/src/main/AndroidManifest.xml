@@ -1,4 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.example.twitter">
     <application
         android:label="twitter_clone"
         android:name="${applicationName}"
@@ -17,6 +18,9 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
+            
+            <!-- Enable handle deeplink -->
+            <!-- <meta-data android:name="flutter_deeplinking_enabled" android:value="true" /> -->
 
             <!-- Config for Zalopay -->
             <intent-filter>
@@ -34,11 +38,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with https://YOUR_HOST -->
-                <data
-                  android:scheme="https"
-                  android:pathPrefix="/payment-result/"
-                  android:host="twitter.blacksky.com" />
+                <data android:scheme="https" android:host="payment-aae40.web.app" android:pathPrefix="/payment-result/" />  
             </intent-filter>
 
             <meta-data
