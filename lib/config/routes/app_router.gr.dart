@@ -61,6 +61,7 @@ abstract class _$AppRouter extends RootStackRouter {
           title: args.title,
           message: args.message,
           amount: args.amount,
+          currency: args.currency,
         ),
       );
     },
@@ -208,6 +209,7 @@ class PaymentResultViewRoute extends PageRouteInfo<PaymentResultViewRouteArgs> {
     required String title,
     required String message,
     required String amount,
+    required String currency,
     List<PageRouteInfo>? children,
   }) : super(
           PaymentResultViewRoute.name,
@@ -217,6 +219,7 @@ class PaymentResultViewRoute extends PageRouteInfo<PaymentResultViewRouteArgs> {
             title: title,
             message: message,
             amount: amount,
+            currency: currency,
           ),
           initialChildren: children,
         );
@@ -234,6 +237,7 @@ class PaymentResultViewRouteArgs {
     required this.title,
     required this.message,
     required this.amount,
+    required this.currency,
   });
 
   final Key? key;
@@ -246,9 +250,11 @@ class PaymentResultViewRouteArgs {
 
   final String amount;
 
+  final String currency;
+
   @override
   String toString() {
-    return 'PaymentResultViewRouteArgs{key: $key, status: $status, title: $title, message: $message, amount: $amount}';
+    return 'PaymentResultViewRouteArgs{key: $key, status: $status, title: $title, message: $message, amount: $amount, currency: $currency}';
   }
 }
 

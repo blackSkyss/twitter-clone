@@ -7,6 +7,7 @@ import '../../../../util/enums/enums_export.dart';
 
 @RoutePage()
 class PaymentResultView extends StatelessWidget {
+  final String currency;
   final PaymentStatusType status;
   final String title;
   final String message;
@@ -17,6 +18,7 @@ class PaymentResultView extends StatelessWidget {
     required this.title,
     required this.message,
     required this.amount,
+    required this.currency,
   });
 
   @override
@@ -48,7 +50,7 @@ class PaymentResultView extends StatelessWidget {
               ),
               SizedBox(height: size.height * 0.02),
               Text(
-                '$amount VND',
+                currency.endsWith('VND') ? '$amount VND' : '$amount USD',
                 style: const TextStyle(
                   color: Pallete.whiteColor,
                   fontSize: 30,

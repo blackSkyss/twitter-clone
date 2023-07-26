@@ -5,8 +5,8 @@ class AssetsConstants {
   static const String momoLogo = '$_imgsPath/momo_logo.png';
   static const String zalopayLogo = '$_imgsPath/zalopay_logo.png';
   static const String paypalLogo = '$_imgsPath/paypal_logo.png';
-
   static const String twitterLogo = '$_svgsPath/twitter_logo.svg';
+
   static const String homeFilledIcon = '$_svgsPath/home_filled.svg';
   static const String homeOutlinedIcon = '$_svgsPath/home_outlined.svg';
   static const String notifFilledIcon = '$_svgsPath/notif_filled.svg';

@@ -1,4 +1,3 @@
-import 'package:any_link_preview/any_link_preview.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -164,18 +163,18 @@ class TweetCard extends ConsumerWidget {
                                     margin: const EdgeInsets.only(top: 20),
                                     child: CarouselImage(tweet.imageLinks),
                                   ),
-                                if (tweet.link.isNotEmpty) ...[
-                                  const SizedBox(height: 4),
-                                  AnyLinkPreview(
-                                    displayDirection:
-                                        UIDirection.uiDirectionHorizontal,
-                                    link: 'https://${tweet.link}',
-                                    errorWidget: Container(
-                                      color: Colors.grey[300],
-                                      child: const Text('Oops!'),
-                                    ),
-                                  ),
-                                ],
+                                // if (tweet.link.isNotEmpty) ...[
+                                //   const SizedBox(height: 4),
+                                //   AnyLinkPreview(
+                                //     displayDirection:
+                                //         UIDirection.uiDirectionHorizontal,
+                                //     link: 'https://${tweet.link}',
+                                //     errorWidget: Container(
+                                //       color: Colors.grey[300],
+                                //       child: const Text('Oops!'),
+                                //     ),
+                                //   ),
+                                // ],
                                 Container(
                                   margin: const EdgeInsets.only(
                                     top: 10,
