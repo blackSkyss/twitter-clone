@@ -277,11 +277,12 @@ class PaymentView extends HookConsumerWidget {
 
     // Payment order
     void paymentOrder() {
-      final amount = int.parse(amountController.text.trim());
       if (amountController.text.isEmpty) {
         showSnackBar(context: context, content: 'Amount is empty');
         return;
       }
+
+      final amount = int.parse(amountController.text.trim());
 
       if (payMethod.value == PaymentType.momo.type ||
           payMethod.value == PaymentType.zalopay.type) {
